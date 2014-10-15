@@ -1,0 +1,6 @@
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.csprojResolveAssemblyReference.cache
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\MAH_Pacman.exe
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\MAH_Pacman.pdb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.exe
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.pdb

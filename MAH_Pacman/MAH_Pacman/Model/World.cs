@@ -11,37 +11,37 @@ namespace MAH_Pacman.Model
 {
     public class World
     {
-        private List<GameEntity> entities;
+        private Engine engine;
 
         public World()
         {
-            this.entities = new List<GameEntity>();
+            this.engine = new Engine();
             initEntities();
         }
 
+        Pacman pacman;
         private void initEntities()
         {
-            Pacman pacman = new Pacman();
-            pacman.AddComponent(new MovementComponent());
-            pacman.AddSystem(new MovementSystem());
+            pacman = new Pacman();
+            pacman.Add(new MovementComponent());
+            pacman.Add(new PositionComponent());
+            pacman.Add(new SpriteComponent(Assets.getItems()));
+            engine.Add(pacman);
 
-            entities.Add(pacman);
+
+            engine.Add(new RenderSystem());
         }
 
         public void Update(float delta)
         {
-            foreach (var system in entities)
-            {
-                system.Update(delta);
-            }
+            engine.Update(delta);
         }
 
         public void Draw(SpriteBatch batch)
         {
-            foreach (var system in entities)
-            {
-                system.Draw(batch);
-            }
+            batch.Begin();
+            engine.Draw(batch);
+            batch.End();
         }
     }
 }

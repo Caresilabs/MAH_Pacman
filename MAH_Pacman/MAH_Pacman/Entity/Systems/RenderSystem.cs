@@ -8,11 +8,11 @@ using System.Text;
 
 namespace MAH_Pacman.Entity.Systems
 {
-    public class MovementSystem : EntitySystem
+    public class RenderSystem : EntitySystem
     {
         public override Type[] RequeredComponents()
         {
-            return Requered(typeof(MovementComponent), typeof(PositionComponent));
+            return Requered(typeof(PositionComponent), typeof(SpriteComponent));
         }
 
         public override void Init()
@@ -21,19 +21,19 @@ namespace MAH_Pacman.Entity.Systems
 
         public override void Update(float delta)
         {
-            foreach (var item in Entities)
-            {
-                
-            }
-            //MovementComponent movement = GetComponent<MovementComponent>();
-
-           // movement.Velocity.X += 1;
-
-            //Console.WriteLine(movement.Velocity.ToString());
         }
 
         public override void Draw(SpriteBatch batch)
         {
+            foreach (var item in Entities)
+            {
+                PositionComponent position = item.GetComponent<PositionComponent>();
+                SpriteComponent sprite = item.GetComponent<SpriteComponent>();
+
+                position.Position+= new Vector2(2, 1);
+                batch.Draw(sprite.Texture, position.Position, Color.White);
+
+            }
         }
     }
 }

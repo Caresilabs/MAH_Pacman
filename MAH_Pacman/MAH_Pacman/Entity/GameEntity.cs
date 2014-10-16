@@ -11,50 +11,37 @@ namespace MAH_Pacman.Entity
     public class GameEntity
     {
         private Dictionary<Type, Component> components;
-        private Dictionary<Type, EntitySystem> systems;
+        
+        public Engine Engine { get; set; }
 
         public GameEntity()
         {
             this.components = new Dictionary<Type, Component>();
-            this.systems = new Dictionary<Type, EntitySystem>();
         }
 
-        public void Update(float delta)
-        {
-            foreach (var system in systems)
-            {
-                system.Value.Update(delta);
-            }
-        }
-
-        public void Draw(SpriteBatch batch)
-        {
-            foreach (var system in systems)
-            {
-                system.Value.Draw(batch);
-            }
-        }
-
-        public void AddComponent(Component component)
+        public void Add(Component component)
         {
             try
             {
                 components.Add(component.GetType(), component);
+                if (Engine != null) Engine.UpdateEntitiesForSystems();
             }
-            catch (System.ArgumentException e)
+            catch (System.ArgumentException)
             {
                 Console.WriteLine("Cannot add another " + component.GetType());
             } 
         }
 
-        public void RemoveComponent(Component component)
+        public void Remove(Component component)
         {
             components.Remove(component.GetType());
+            if (Engine != null) Engine.UpdateEntitiesForSystems();
         }
 
-        public void RemoveComponent<T>()
+        public void Remove<T>()
         {
             components.Remove(typeof(T));
+            if (Engine != null) Engine.UpdateEntitiesForSystems();
         }
 
         public T GetComponent<T>()
@@ -62,26 +49,14 @@ namespace MAH_Pacman.Entity
             return (T)Convert.ChangeType(components[typeof(T)], typeof(T));
         }
 
+        public List<Type> GetComponentTypes()
+        {
+            return components.Keys.ToList();
+        }
+
         public bool HasComponent<T>()
         {
             return components.ContainsKey(typeof(T));
-        }
-
-        public void AddSystem(EntitySystem system)
-        {
-            system.Entity = this;
-            system.Init();
-            systems.Add(system.GetType(), system);
-        }
-
-        public void RemoveSystem(EntitySystem system)
-        {
-            systems.Remove(system.GetType());
-        }
-
-        public void RemoveSystem<T>()
-        {
-            systems.Remove(typeof(T));
         }
     }
 }

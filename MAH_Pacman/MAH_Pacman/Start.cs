@@ -35,6 +35,9 @@ namespace MAH_Pacman
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            Assets.load(Content);
+
+            world = new World();
             // TODO: use this.Content to load your game content here
         }
 
@@ -43,7 +46,7 @@ namespace MAH_Pacman
             // TODO: Unload any non ContentManager content here
         }
 
-        World world = new World();
+        World world;
         protected override void Update(GameTime gameTime)
         {
             // Allows the game to exit

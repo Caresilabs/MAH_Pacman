@@ -4,3 +4,12 @@ C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\M
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\MAH_Pacman.pdb
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.exe
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.pdb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\bomb.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\miss.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\music.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\bg1.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\bg2.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\items.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\ui.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Font\font.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\music.wma

@@ -1,0 +1,91 @@
+﻿using MAH_Pacman.Entity.Systems;
+using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace MAH_Pacman.Entity
+{
+    public class Engine
+    {
+        private Dictionary<Type, EntitySystem> systems;
+        private List<GameEntity> entities;
+
+        public Engine()
+        {
+            this.systems = new Dictionary<Type, EntitySystem>();
+            this.entities = new List<GameEntity>();
+        }
+
+        public void Update(float delta)
+        {
+            foreach (var system in systems)
+            {
+                if (system.Value.Entities.Count != 0)
+                    system.Value.Update(delta);
+            }
+        }
+
+        public void Draw(SpriteBatch batch)
+        {
+            foreach (var system in systems)
+            {
+                if (system.Value.Entities.Count != 0)
+                    system.Value.Draw(batch);
+            }
+        }
+
+        public void Add(GameEntity entity)
+        {
+            entity.Engine = this;
+            entities.Add(entity);
+            UpdateEntitiesForSystems();
+        }
+
+        public void Remove(GameEntity entity)
+        {
+            entities.Remove(entity);
+            UpdateEntitiesForSystems();
+        }
+
+        public void Add(EntitySystem system)
+        {
+            system.Engine = this;
+            systems.Add(system.GetType(), system);
+            UpdateEntitiesForSystems();
+            system.Init();
+        }
+
+        public void UpdateEntitiesForSystems()
+        {
+            foreach (var system in systems)
+            {
+                UpdateEntitiesForSystem(system.Value);
+            }
+        }
+
+        public void UpdateEntitiesForSystem(EntitySystem system)
+        {
+            List<GameEntity> list = system.Entities;
+            list.Clear();
+
+            foreach (var entity in entities)
+            {
+                bool allowed = system.RequeredComponents().All(x => entity.GetComponentTypes().Contains(x));
+                if (allowed)
+                    list.Add(entity);
+            }
+        }
+
+        public void Remove(EntitySystem system)
+        {
+            systems.Remove(system.GetType());
+        }
+
+        public void Remove<T>()
+        {
+            systems.Remove(typeof(T));
+        }
+    }
+}

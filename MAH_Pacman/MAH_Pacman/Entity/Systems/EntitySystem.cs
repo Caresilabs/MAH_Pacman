@@ -8,17 +8,21 @@ namespace MAH_Pacman.Entity.Systems
 {
     public abstract class EntitySystem
     {
-        public GameEntity Entity { get; set; }
+        public List<GameEntity> Entities = new List<GameEntity>();
+
+        public Engine Engine { get; set; }
 
         public abstract void Init();
+
+        public abstract Type[] RequeredComponents();
+
+        protected Type[] Requered(params Type[] type)
+        {
+            return type;
+        }
 
         public abstract void Update(float delta);
 
         public abstract void Draw(SpriteBatch batch);
-
-        public T GetComponent<T>()
-        {
-            return Entity.GetComponent<T>();
-        }
     }
 }

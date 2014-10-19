@@ -9,15 +9,19 @@ namespace MAH_Pacman.Entity.Components
 {
     public class SpriteComponent : Component
     {
-        public Texture2D Texture { get; set; }
+        public Texture2D texture;
 
-        public Rectangle Source { get; set; }
+        public Rectangle source;
 
-        public Vector2 Origin { get; set; }
+        public Rectangle bounds;
+
+        public Vector2 origin;
+
+        public double rotation;
 
         public SpriteComponent(Texture2D texture)
         {
-            this.Texture = texture;
+            this.texture = texture;
         }
     }
 }

@@ -1,9 +1,6 @@
-Content\Audio\bomb.xnb
-Content\Audio\miss.xnb
-Content\Audio\music.xnb
 Content\Graphics\bg1.xnb
 Content\Graphics\bg2.xnb
-Content\Graphics\items.xnb
 Content\Graphics\ui.xnb
+Content\Graphics\items.xnb
 Content\Font\font.xnb
-Content\Audio\music.wma
+Content\levels.txt

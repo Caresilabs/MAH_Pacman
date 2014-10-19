@@ -11,8 +11,8 @@ namespace MAH_Pacman.Entity
     public class GameEntity
     {
         private Dictionary<Type, Component> components;
-        
-        public Engine Engine { get; set; }
+
+        public Engine engine;
 
         public GameEntity()
         {
@@ -24,7 +24,7 @@ namespace MAH_Pacman.Entity
             try
             {
                 components.Add(component.GetType(), component);
-                if (Engine != null) Engine.UpdateEntitiesForSystems();
+                if (engine != null) engine.UpdateEntitiesForSystems();
             }
             catch (System.ArgumentException)
             {
@@ -32,16 +32,25 @@ namespace MAH_Pacman.Entity
             } 
         }
 
+        public void Add(params Component[] components)
+        {
+            foreach (var item in components)
+            {
+                this.components.Add(item.GetType(), item);
+            }
+            if (engine != null) engine.UpdateEntitiesForSystems();
+        }
+
         public void Remove(Component component)
         {
             components.Remove(component.GetType());
-            if (Engine != null) Engine.UpdateEntitiesForSystems();
+            if (engine != null) engine.UpdateEntitiesForSystems();
         }
 
         public void Remove<T>()
         {
             components.Remove(typeof(T));
-            if (Engine != null) Engine.UpdateEntitiesForSystems();
+            if (engine != null) engine.UpdateEntitiesForSystems();
         }
 
         public T GetComponent<T>()

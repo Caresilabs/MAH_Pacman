@@ -2,34 +2,6 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
-      <Source>Audio\bomb.wav</Source>
-      <Name>Audio\bomb</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\bomb.xnb</Output>
-      <Time>2014-10-07T20:39:46.4479506+02:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\miss.wav</Source>
-      <Name>Audio\miss</Name>
-      <Importer>WavImporter</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\miss.xnb</Output>
-      <Time>2014-10-07T21:03:25.92414+02:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\music.mp3</Source>
-      <Name>Audio\music</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SongProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\music.xnb</Output>
-      <Extra>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\music.wma</Extra>
-      <Time>2014-10-07T20:43:15.557911+02:00</Time>
-    </Item>
-    <Item>
       <Source>Graphics\bg1.jpg</Source>
       <Name>Graphics\bg1</Name>
       <Importer>TextureImporter</Importer>
@@ -48,15 +20,6 @@
       <Time>2014-10-09T17:24:04.3410401+02:00</Time>
     </Item>
     <Item>
-      <Source>Graphics\items.png</Source>
-      <Name>Graphics\items</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\items.xnb</Output>
-      <Time>2014-10-09T19:59:48.5674993+02:00</Time>
-    </Item>
-    <Item>
       <Source>Graphics\ui.png</Source>
       <Name>Graphics\ui</Name>
       <Importer>TextureImporter</Importer>
@@ -64,6 +27,15 @@
       <Options>None</Options>
       <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\ui.xnb</Output>
       <Time>2014-10-09T20:21:55.75441+02:00</Time>
+    </Item>
+    <Item>
+      <Source>Graphics\items.png</Source>
+      <Name>Graphics\items</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\items.xnb</Output>
+      <Time>2014-10-19T20:38:38.8176435+02:00</Time>
     </Item>
     <Item>
       <Source>Font\font.spritefont</Source>

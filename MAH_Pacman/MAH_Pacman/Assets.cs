@@ -43,20 +43,10 @@ namespace MAH_Pacman
             bg2 = manager.Load<Texture2D>("Graphics/bg2");
 
             // Load our assets regions
-            loadRegion("tile", 200, 150, 50, 50);
-            loadRegion("tileSelect", 200, 200, 50, 50);
-            loadRegion("tileWater", 200, 50, 50, 50);
-            loadRegion("tileHit", 150, 150, 50, 50);
-            loadRegion("tileBomb", 150, 200, 50, 50);
-
-            // ship regions
-            loadRegion("ship5", 0, 0, 250, 50);
-            loadRegion("ship4", 0, 50, 200, 50);
-            loadRegion("ship3", 0, 100, 150, 50);
-            loadRegion("ship2", 0, 200, 100, 50);
+            loadRegion("tile", 0, 0, 16, 16);
 
             // others
-            loadRegion("pixel", 249, 249, 1, 1);
+            loadRegion("pixel", 133, 0, 2, 2);
 
             // Load UI
             loadRegion("title", 0, 0, 512, 64);

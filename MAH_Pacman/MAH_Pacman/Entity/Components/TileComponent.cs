@@ -6,8 +6,8 @@ using System.Text;
 
 namespace MAH_Pacman.Entity.Components
 {
-    public class MovementComponent : Component
+    public class TileComponent : Component
     {
-        public Vector2 velocity;
+        public static float TILE_SIZE;
     }
 }

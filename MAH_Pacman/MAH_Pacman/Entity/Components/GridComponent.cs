@@ -6,8 +6,8 @@ using System.Text;
 
 namespace MAH_Pacman.Entity.Components
 {
-    public class PositionComponent : Component
+    public class GridComponent : Component
     {
-        public Vector2 Position = new Vector2();
+        public Tile[,] grid;
     }
 }

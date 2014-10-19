@@ -9,62 +9,106 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using MAH_Pacman.Model;
+using MAH_Pacman.Controller;
 
 namespace MAH_Pacman
 {
     public class Start : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        public const string GAME_NAME = "Pacmoma";
+
+        private static GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private Screen currentScreen;
+
+        private float aspectRatio;
 
         public Start()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            int scale = 2;
+
+            graphics.PreferredBackBufferWidth = 224 * scale;
+            graphics.PreferredBackBufferHeight = 288 * scale;
+
+            aspectRatio = graphics.PreferredBackBufferWidth / (float)graphics.PreferredBackBufferHeight;
+
+            IsMouseVisible = true;
+            Window.AllowUserResizing = true;
+            Window.Title = GAME_NAME + " by [Simon Bothen]"; //  set title to our game name
         }
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
 
             Assets.load(Content);
 
-            world = new World();
-            // TODO: use this.Content to load your game content here
+            // init startup screen
+            setScreen(getStartScreen());
         }
 
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Assets.unload();
         }
 
-        World world;
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 this.Exit();
 
-            world.Update(0);
+            // get second between last frame and current frame, used for fair physics manipulation and not based on frames
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            // then update the screen
+            currentScreen.Update(delta);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            world.Draw(spriteBatch);
+            // Draw screen
+            currentScreen.Draw(spriteBatch);
 
             base.Draw(gameTime);
+        }
+
+        public void setScreen(Screen newScreen)
+        {
+            if (newScreen == null) return;
+
+            // Dispose old screen
+            if (currentScreen != null)
+                currentScreen.Dispose();
+
+            // init new screen
+            currentScreen = newScreen;
+            newScreen.SetGame(this);
+            newScreen.SetGraphics(GraphicsDevice);
+            currentScreen.Init();
+        }
+
+        public static void changeResolution(int width, int height)
+        {
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            graphics.ApplyChanges();
+        }
+
+        private Screen getStartScreen()
+        {
+            return new GameScreen();
         }
     }
 }

@@ -22,7 +22,7 @@ namespace MAH_Pacman.Entity
         {
             foreach (var system in systems)
             {
-                if (system.Value.Entities.Count != 0)
+                if (system.Value.entities.Count != 0)
                     system.Value.Update(delta);
             }
         }
@@ -31,14 +31,17 @@ namespace MAH_Pacman.Entity
         {
             foreach (var system in systems)
             {
-                if (system.Value.Entities.Count != 0)
-                    system.Value.Draw(batch);
+                if (system.Value.GetType().IsSubclassOf(typeof(RenderSystem)))
+                {
+                    ((RenderSystem)system.Value).Draw(batch);
+                }
+                    //
             }
         }
 
         public void Add(GameEntity entity)
         {
-            entity.Engine = this;
+            entity.engine = this;
             entities.Add(entity);
             UpdateEntitiesForSystems();
         }
@@ -51,7 +54,7 @@ namespace MAH_Pacman.Entity
 
         public void Add(EntitySystem system)
         {
-            system.Engine = this;
+            system.engine = this;
             systems.Add(system.GetType(), system);
             UpdateEntitiesForSystems();
             system.Init();
@@ -67,7 +70,7 @@ namespace MAH_Pacman.Entity
 
         public void UpdateEntitiesForSystem(EntitySystem system)
         {
-            List<GameEntity> list = system.Entities;
+            List<GameEntity> list = system.entities;
             list.Clear();
 
             foreach (var entity in entities)
@@ -76,6 +79,12 @@ namespace MAH_Pacman.Entity
                 if (allowed)
                     list.Add(entity);
             }
+        }
+
+        public T GetSystem<T>()
+        {
+
+            return (T)Convert.ChangeType(systems[typeof(T)], typeof(T));
         }
 
         public void Remove(EntitySystem system)

@@ -73,21 +73,37 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets.cs" />
+    <Compile Include="Controller\GameScreen.cs" />
     <Compile Include="Entity\Components\AIComponent.cs" />
     <Compile Include="Entity\Components\Component.cs" />
     <Compile Include="Entity\Components\MovementComponent.cs" />
-    <Compile Include="Entity\Components\PositionComponent.cs" />
+    <Compile Include="Entity\Components\GridComponent.cs" />
+    <Compile Include="Entity\Components\AnimationComponent.cs" />
+    <Compile Include="Entity\Components\PacmanComponent.cs" />
+    <Compile Include="Entity\Components\TileComponent.cs" />
+    <Compile Include="Entity\Components\TransformationComponent.cs" />
     <Compile Include="Entity\Components\SpriteComponent.cs" />
     <Compile Include="Entity\Engine.cs" />
-    <Compile Include="Entity\Pacman.cs" />
+    <Compile Include="Entity\Systems\PacmanSystem.cs" />
+    <Compile Include="Entity\Systems\GridRenderSystem.cs" />
     <Compile Include="Entity\Systems\EntitySystem.cs" />
     <Compile Include="Entity\GameEntity.cs" />
-    <Compile Include="Entity\Systems\RenderSystem.cs" />
+    <Compile Include="Entity\Systems\CollisionSystem.cs" />
+    <Compile Include="Entity\Systems\IteratingSystem.cs" />
+    <Compile Include="Entity\Systems\DrawSystem.cs" />
+    <Compile Include="Entity\Systems\GridSystem.cs" />
+    <Compile Include="Entity\Systems\AnimationSystem.cs" />
     <Compile Include="Entity\Systems\MovementSystem.cs" />
+    <Compile Include="Entity\Systems\RenderSystem.cs" />
+    <Compile Include="Entity\Tile.cs" />
+    <Compile Include="LevelIO.cs" />
     <Compile Include="Model\World.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Screen.cs" />
     <Compile Include="Start.cs" />
+    <Compile Include="Tools\Camera2D.cs" />
+    <Compile Include="Tools\MathUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="TODO.txt" />
@@ -125,9 +141,7 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controller\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

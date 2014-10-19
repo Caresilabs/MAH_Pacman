@@ -8,32 +8,32 @@ using System.Text;
 
 namespace MAH_Pacman.Entity.Systems
 {
-    public class MovementSystem : EntitySystem
+    public class MovementSystem : IteratingSystem
     {
         public override Type[] RequeredComponents()
         {
-            return Requered(typeof(MovementComponent), typeof(PositionComponent));
+            return FamilyFor(typeof(MovementComponent), typeof(TransformationComponent));
         }
 
         public override void Init()
         {
         }
 
-        public override void Update(float delta)
+        public override void ProcessEntity(GameEntity entity, float delta)
         {
-            foreach (var item in Entities)
+            MovementComponent movement = entity.GetComponent<MovementComponent>();
+            TransformationComponent transform = entity.GetComponent<TransformationComponent>();
+
+            transform.position.X += movement.velocity.X * delta;
+            transform.position.Y += movement.velocity.Y * delta;
+
+            GridSystem grid = engine.GetSystem<GridSystem>();
+
+            if (! grid.IsForwardWalkable(entity))
             {
-                
+                movement.velocity.X = 0;
+                movement.velocity.Y = 0;
             }
-            //MovementComponent movement = GetComponent<MovementComponent>();
-
-           // movement.Velocity.X += 1;
-
-            //Console.WriteLine(movement.Velocity.ToString());
-        }
-
-        public override void Draw(SpriteBatch batch)
-        {
         }
     }
 }

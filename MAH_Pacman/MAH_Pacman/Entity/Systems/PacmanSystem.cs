@@ -1,5 +1,6 @@
 ﻿using MAH_Pacman.Entity.Components;
 using MAH_Pacman.Model;
+using MAH_Pacman.Scene2D;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -17,9 +18,7 @@ namespace MAH_Pacman.Entity.Systems
             return FamilyFor(typeof(PacmanComponent), typeof(MovementComponent));
         }
 
-        public override void Init()
-        {
-        }
+        public override void Init() { }
 
         public override void Update(float delta)
         {
@@ -30,40 +29,55 @@ namespace MAH_Pacman.Entity.Systems
 
             if (engine.GetSystem<GridSystem>().GetTile(transform.GetIntX(), transform.GetIntY()).TryEatPellet())
             {
-                //
+                data.score += TileComponent.PELLET_SCORE;
             }
 
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                // pacman.GetComponent<MovementComponent>().velocity = new Vector2(0, 1);
-            }
-
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            // Control pacman
+            if (InputHandler.KeyReleased(Keys.W))
             {
                 data.nextDirection = World.DIRECTION_UP;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
+            if (InputHandler.KeyReleased(Keys.S))
             {
-                 data.nextDirection = World.DIRECTION_DOWN;
+                data.nextDirection = World.DIRECTION_DOWN;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.A))
+            if (InputHandler.KeyReleased(Keys.A))
             {
-                 data.nextDirection = World.DIRECTION_LEFT;
+                data.nextDirection = World.DIRECTION_LEFT;
             }
-            if (Keyboard.GetState().IsKeyDown(Keys.D))
+            if (InputHandler.KeyReleased(Keys.D))
             {
-                 data.nextDirection = World.DIRECTION_RIGHT;
+                data.nextDirection = World.DIRECTION_RIGHT;
             }
 
-            // If pacman can turn
-            if (data.nextDirection != World.DIRECTION_NONE && engine.GetSystem<GridSystem>().CanTurn(pacman, pacman.GetComponent<PacmanComponent>().nextDirection))
+            // Check if he is allowed to turn and has the position to move
+            if (data.nextDirection != World.DIRECTION_NONE && engine.GetSystem<GridSystem>().CanTurn(pacman, data.direction) && data.nextDirection != data.direction)
             {
-                movement.velocity = new Vector2(PacmanComponent.SPEED * data.nextDirection.X,
-                    PacmanComponent.SPEED * data.nextDirection.Y);
-                pacman.GetComponent<SpriteComponent>().rotation = Math.PI;
+                // If it is walkable
+                if (engine.GetSystem<GridSystem>().IsWalkable(pacman, data.nextDirection))
+                {
+                    movement.velocity = new Vector2(PacmanComponent.SPEED * data.nextDirection.X,
+                        PacmanComponent.SPEED * data.nextDirection.Y);
+                    pacman.GetComponent<SpriteComponent>().rotation = GetRotation(data.nextDirection);
 
-                data.nextDirection = World.DIRECTION_NONE;
+                    transform.position.X = (int)(transform.position.X + .5f);
+                    transform.position.Y = (int)(transform.position.Y + .5f);
+
+                    movement.halt = false;
+
+                    data.direction = data.nextDirection;
+                    data.nextDirection = World.DIRECTION_NONE;
+                }
             }
+        }
+
+        public double GetRotation(Point direction)
+        {
+            if (Point.Equals(direction, World.DIRECTION_UP)) return -Math.PI / 2;
+            else if (Point.Equals(direction, World.DIRECTION_DOWN)) return Math.PI / 2;
+            else if (Point.Equals(direction, World.DIRECTION_LEFT)) return Math.PI;
+            else if (Point.Equals(direction, World.DIRECTION_RIGHT)) return 0;
+            return 0;
         }
     }
 }

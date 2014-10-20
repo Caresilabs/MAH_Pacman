@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using MAH_Pacman.Model;
 using MAH_Pacman.Controller;
+using MAH_Pacman.Scene2D;
 
 namespace MAH_Pacman
 {
@@ -71,6 +72,9 @@ namespace MAH_Pacman
             // then update the screen
             currentScreen.Update(delta);
 
+            // update input
+            InputHandler.Update(delta);
+
             base.Update(gameTime);
         }
 
@@ -108,7 +112,7 @@ namespace MAH_Pacman
 
         private Screen getStartScreen()
         {
-            return new GameScreen();
+            return new MainMenuScreen();
         }
     }
 }

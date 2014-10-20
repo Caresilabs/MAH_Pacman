@@ -20,7 +20,7 @@ namespace MAH_Pacman.Model
         public static readonly Point DIRECTION_NONE = new Point(0, 0);
 
         public const int WIDTH = 14;
-        public const int HEIGHT = 18;
+        public const int HEIGHT = 16;
 
         private Engine engine;
 

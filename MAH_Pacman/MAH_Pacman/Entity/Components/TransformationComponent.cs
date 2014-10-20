@@ -14,12 +14,12 @@ namespace MAH_Pacman.Entity.Components
 
         public int GetIntX()
         {
-            return (int)position.X;
+            return (int)(position.X + .5f);
         }
 
         public int GetIntY()
         {
-            return (int)position.Y;
+            return (int)(position.Y + .5f);
         }
     }
 }

@@ -9,5 +9,7 @@ namespace MAH_Pacman.Entity.Components
     public class TileComponent : Component
     {
         public static float TILE_SIZE;
+        
+        public static int PELLET_SCORE = 10;
     }
 }

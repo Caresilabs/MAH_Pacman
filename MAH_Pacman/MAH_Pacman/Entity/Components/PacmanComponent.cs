@@ -10,8 +10,11 @@ namespace MAH_Pacman.Entity.Components
     public class PacmanComponent : Component
     {
         public static float SIZE = 1;
-        public static float SPEED = 2;
+        public static float SPEED = 3;
 
         public Point nextDirection = World.DIRECTION_NONE;
+        public Point direction = World.DIRECTION_NONE;
+
+        public int score = 0;
     }
 }

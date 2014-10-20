@@ -11,6 +11,13 @@ namespace MAH_Pacman.Entity.Systems
 {
     public class GridSystem : EntitySystem
     {
+        public Rectangle bounds;
+
+        public GridSystem(int y)
+        {
+            this.bounds = new Rectangle(0, y, World.WIDTH, World.HEIGHT - y);
+        }
+
         public override Type[] RequeredComponents()
         {
             return FamilyFor(typeof(GridComponent));
@@ -34,29 +41,27 @@ namespace MAH_Pacman.Entity.Systems
         public bool IsForwardWalkable(GameEntity entity)
         {
             MovementComponent movement = entity.GetComponent<MovementComponent>();
+            return IsWalkable(entity, movement.velocity);
+        }
+
+        public bool IsWalkable(GameEntity entity, Point direction)
+        {
+            MovementComponent movement = entity.GetComponent<MovementComponent>();
             TransformationComponent position = entity.GetComponent<TransformationComponent>();
 
-            if (movement.velocity.X > 0)
-            {
-                Tile tile = GetTile(position.GetIntX() + 1, position.GetIntY());
-                if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
-            }
-            else if (movement.velocity.X < 0)
-            {
-                Tile tile = GetTile(position.GetIntX() - 1, position.GetIntY());
-                if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
-            }
-            else if (movement.velocity.Y > 0)
-            {
-                Tile tile = GetTile(position.GetIntX(), position.GetIntY() + 1);
-                if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
-            }
-            else if (movement.velocity.Y < 0)
-            {
-                Tile tile = GetTile(position.GetIntX(), position.GetIntY() - 1);
-                if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
-            }
+            int signVelocityX = Math.Sign(direction.X);
+            int signVelocityY = Math.Sign(direction.Y);
+
+            Tile tile = GetTileModulus(position.GetIntX() + signVelocityX, position.GetIntY() + signVelocityY);
+            if (tile != null && tile.Type() == Tile.TileType.PASSABLE) 
+                return true;
+
             return false;
+        }
+
+        public bool IsWalkable(GameEntity entity, Vector2 direction)
+        {
+            return IsWalkable(entity, new Point((int)direction.X, (int)direction.Y));
         }
 
         public bool CanTurn(GameEntity entity, Point direction)
@@ -64,11 +69,42 @@ namespace MAH_Pacman.Entity.Systems
             MovementComponent movement = entity.GetComponent<MovementComponent>();
             TransformationComponent position = entity.GetComponent<TransformationComponent>();
 
-
-            Tile tile = GetTile(position.GetIntX() + direction.X, position.GetIntY() + direction.Y);
-            if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
-
+            if (HasWalkedHalf(direction, position))
+            {
+                //Tile tile = GetTile(position.GetIntX() + direction.X, position.GetIntY() + direction.Y);
+                ///if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
+                return true;
+            }
             return false;
+        }
+
+        public bool HasWalkedHalf(Point direction, TransformationComponent position)
+        {
+            //check if he over half the tile
+            Vector2 normalPosition = new Vector2(position.position.X + .5f, position.position.Y + .5f) - new Vector2((int)(position.position.X + .5f) + .5f, (int)(position.position.Y + .5f) + .5f);
+            
+            if (! Vector2.Equals(normalPosition, Vector2.Zero))
+                normalPosition.Normalize();
+
+
+            Vector2 normalVelocity = new Vector2(direction.X, direction.Y);
+
+            // Vertical movement
+            normalPosition.X = Math.Sign(normalPosition.X);
+            normalPosition.Y = Math.Sign(normalPosition.Y);
+
+            if (Vector2.Equals(normalPosition, normalVelocity) || Vector2.Equals(Vector2.Zero, normalPosition))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool HasWalkedHalf(Vector2 direction, TransformationComponent position)
+        {
+            Vector2 dir = new Vector2(direction.X, direction.Y);
+            dir.Normalize();
+            return HasWalkedHalf(new Point((int)dir.X, (int)dir.Y), position);
         }
 
         public Tile GetTile(int x, int y)

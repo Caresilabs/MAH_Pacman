@@ -83,6 +83,16 @@ namespace MAH_Pacman.Tools
             position += amount;
         }
 
+        public float GetWidth()
+        {
+            return defaultViewPort.X;
+        }
+
+        public float GetHeight()
+        {
+            return defaultViewPort.Y;
+        }
+
         public Vector2 GetPosition()
         {
             return position;

@@ -9,5 +9,7 @@ namespace MAH_Pacman.Entity.Components
     public class MovementComponent : Component
     {
         public Vector2 velocity;
+
+        public bool halt = false;
     }
 }

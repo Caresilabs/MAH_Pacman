@@ -39,7 +39,7 @@ namespace MAH_Pacman.Controller
         private void InitSystems()
         {
             this.engine.Add(new PacmanSystem());
-            this.engine.Add(new GridSystem());
+            this.engine.Add(new GridSystem(2));
             this.engine.Add(new AnimationSystem());
             this.engine.Add(new MovementSystem());
 

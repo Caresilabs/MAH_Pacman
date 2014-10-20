@@ -30,7 +30,7 @@ namespace MAH_Pacman.Entity.Systems
         {
             batch.Begin(SpriteSortMode.BackToFront,
                        BlendState.AlphaBlend,
-                       SamplerState.LinearClamp,
+                       SamplerState.PointClamp,
                        null,
                        null,
                        null,
@@ -48,7 +48,6 @@ namespace MAH_Pacman.Entity.Systems
                         Tile tile = grid.grid[i, j];
 
                         //batch.Draw(sprite.Texture, new Rectangle((int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)                           , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE), sprite.Source, Color.Gray, 0,Vector2.Zero, SpriteEffects.None, .5f);
-
 
                         if (tile.HasWallWhere(World.DIRECTION_DOWN))
                         {

@@ -12,12 +12,12 @@ namespace MAH_Pacman.Entity.Systems
 {
     public class GridRenderSystem : RenderSystem
     {
-        private Camera2D camera;
+        public Camera2D camera;
         private int wallThickness;
 
-        public GridRenderSystem(Camera2D camera)
+        public GridRenderSystem(GraphicsDevice device)
         {
-            this.camera = camera;
+            this.camera = new Camera2D(device, 224, 288);
             this.wallThickness = (int)(TileComponent.TILE_SIZE / 10);
         }
 

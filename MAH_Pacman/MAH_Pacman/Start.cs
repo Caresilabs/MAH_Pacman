@@ -112,7 +112,7 @@ namespace MAH_Pacman
 
         private Screen getStartScreen()
         {
-            return new MainMenuScreen();
+            return new GameScreen();
         }
     }
 }

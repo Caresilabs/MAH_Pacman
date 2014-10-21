@@ -15,10 +15,9 @@ namespace MAH_Pacman.Controller
     /**
      * A game screen that manages the world, renderer and input and put them togheter in a convenient way
      */
-    public class GameScreen : Screen
+    public class LevelEditorScreen : Screen
     {
 
-        private World world;
         private Engine engine;
 
         private float stateTime;
@@ -26,7 +25,6 @@ namespace MAH_Pacman.Controller
         public override void Init()
         {
             this.engine = new Engine();
-            this.world = new World(engine);
             this.InitSystems();
         }
 
@@ -36,8 +34,6 @@ namespace MAH_Pacman.Controller
             this.engine.Add(new PacmanSystem());
             this.engine.Add(new AISystem());
             this.engine.Add(new GridSystem(2));
-            this.engine.Add(new AnimationSystem());
-            this.engine.Add(new MovementSystem());
 
             // Render Systems
             this.engine.Add(new GridRenderSystem(GetGraphics()));
@@ -48,7 +44,6 @@ namespace MAH_Pacman.Controller
         {
             stateTime += delta;
 
-            world.Update(delta);
             engine.Update(delta);
         }
 

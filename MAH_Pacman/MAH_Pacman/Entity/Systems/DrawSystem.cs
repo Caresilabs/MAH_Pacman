@@ -14,9 +14,9 @@ namespace MAH_Pacman.Entity.Systems
     {
         public Camera2D camera;
 
-        public DrawSystem(GraphicsDevice device)
+        public DrawSystem(Camera2D camera)
         {
-            this.camera = new Camera2D(device, 224 , 288);
+            this.camera = camera;
         }
 
         public override Type[] RequeredComponents()

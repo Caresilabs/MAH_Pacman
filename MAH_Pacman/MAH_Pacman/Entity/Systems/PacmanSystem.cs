@@ -33,19 +33,19 @@ namespace MAH_Pacman.Entity.Systems
             }
 
             // Control pacman
-            if (InputHandler.KeyReleased(Keys.W))
+            if (InputHandler.KeyDown(Keys.W))
             {
                 data.nextDirection = World.DIRECTION_UP;
             }
-            if (InputHandler.KeyReleased(Keys.S))
+            if (InputHandler.KeyDown(Keys.S))
             {
                 data.nextDirection = World.DIRECTION_DOWN;
             }
-            if (InputHandler.KeyReleased(Keys.A))
+            if (InputHandler.KeyDown(Keys.A))
             {
                 data.nextDirection = World.DIRECTION_LEFT;
             }
-            if (InputHandler.KeyReleased(Keys.D))
+            if (InputHandler.KeyDown(Keys.D))
             {
                 data.nextDirection = World.DIRECTION_RIGHT;
             }

@@ -1,4 +1,5 @@
-﻿using MAH_Pacman.Entity;
+﻿using MAH_Pacman.AI;
+using MAH_Pacman.Entity;
 using MAH_Pacman.Entity.Components;
 using MAH_Pacman.Entity.Systems;
 using Microsoft.Xna.Framework;
@@ -22,9 +23,9 @@ namespace MAH_Pacman.Model
         public const int WIDTH = 14;
         public const int HEIGHT = 16;
 
-        private Engine engine;
+        public static GameEntity pacman;
 
-        private GameEntity pacman;
+        private Engine engine;
 
         public World(Engine engine)
         {
@@ -36,7 +37,7 @@ namespace MAH_Pacman.Model
         {
             CreateLevel(1);
 
-            pacman = CreatePacman(0, 0);
+            //pacman = CreatePacman(0, 0);
         }
 
         private GameEntity CreateLevel(int level)
@@ -52,7 +53,33 @@ namespace MAH_Pacman.Model
             {
                 for (int i = 0; i < WIDTH; i++)
                 {
-                    grid.grid[i, j] = new Tile(inputMap[i, j]);
+                    int type = inputMap[i, j];
+
+                    switch (type)
+                    {
+                        case (int)LevelIO.MAP_TILES.MAP_PACMAN:
+                            pacman = CreatePacman(i, j);
+                            break;
+                        case (int)LevelIO.MAP_TILES.MAP_GHOST_BLINKY:
+                            CreateGhost(i, j, LevelIO.MAP_TILES.MAP_GHOST_BLINKY);
+                            break;
+                        case (int)LevelIO.MAP_TILES.MAP_GHOST_INKY:
+                            break;
+                        case (int)LevelIO.MAP_TILES.MAP_GHOST_PINKY:
+                            break;
+                        case (int)LevelIO.MAP_TILES.MAP_GHOST_CLYDE:
+                            break;
+                        default:
+                            break;
+                    }
+                    if (type <= 2)
+                    {
+                        grid.grid[i, j] = new Tile(type);
+                    }
+                    else
+                    {
+                        grid.grid[i, j] = new Tile((int)LevelIO.MAP_TILES.MAP_PASSABLE);
+                    }
                 }
             }
 
@@ -75,7 +102,7 @@ namespace MAH_Pacman.Model
             var sprite = new SpriteComponent(Assets.getItems());
             var animation = new AnimationComponent(0, 0, 16, 3, .2f);
 
-            transform.position = new Vector2(5, 5);
+            transform.position = new Vector2(x, y);
             transform.size = new Vector2(1, 1);
 
             movement.velocity = new Vector2(0, 0);
@@ -83,6 +110,31 @@ namespace MAH_Pacman.Model
             sprite.origin = new Vector2(8, 8);
 
             entity.Add(movement, transform, sprite, animation, pm);
+            engine.Add(entity);
+
+            return entity;
+        }
+
+        public GameEntity CreateGhost(float x, float y, LevelIO.MAP_TILES ghost)
+        {
+            GameEntity entity = new GameEntity();
+
+            var ai = new AIComponent();
+            var movement = new MovementComponent();
+            var transform = new TransformationComponent();
+            var sprite = new SpriteComponent(Assets.getItems());
+            var animation = new AnimationComponent(0, (int)(ghost - 3) * 16, 16, 8, .2f);
+
+            transform.position = new Vector2(x, y);
+            transform.size = new Vector2(1, 1);
+
+            movement.velocity = new Vector2(1, 0);
+
+            sprite.origin = new Vector2(8, 8);
+
+            ai.controller = new AIBlinky(entity);
+
+            entity.Add(movement, transform, sprite, animation, ai);
             engine.Add(entity);
 
             return entity;

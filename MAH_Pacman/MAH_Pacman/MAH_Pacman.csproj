@@ -78,6 +78,7 @@
     <Compile Include="AI\AIInky.cs" />
     <Compile Include="AI\AIPinky.cs" />
     <Compile Include="Assets.cs" />
+    <Compile Include="Controller\LevelEditorScreen.cs" />
     <Compile Include="Controller\MainMenuScreen.cs" />
     <Compile Include="Controller\GameScreen.cs" />
     <Compile Include="Entity\Components\AIComponent.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Entity\Components\TransformationComponent.cs" />
     <Compile Include="Entity\Components\SpriteComponent.cs" />
     <Compile Include="Entity\Engine.cs" />
+    <Compile Include="Entity\Systems\AISystem.cs" />
     <Compile Include="Entity\Systems\PacmanSystem.cs" />
     <Compile Include="Entity\Systems\GridRenderSystem.cs" />
     <Compile Include="Entity\Systems\EntitySystem.cs" />

@@ -10,6 +10,17 @@ namespace MAH_Pacman
 {
     public static class LevelIO
     {
+        public enum MAP_TILES {
+            MAP_PASSABLE = 0,
+            MAP_BLOCKED = 1,
+            MAP_GHOSTONLY = 2,
+            MAP_PACMAN = 3,
+            MAP_GHOST_BLINKY = 4,
+            MAP_GHOST_INKY = 5,
+            MAP_GHOST_PINKY = 6,
+            MAP_GHOST_CLYDE = 7
+        }
+
         public static int[,] ReadLevel(int lvl)
         {
             StreamReader sr = new StreamReader(@"Content/levels.txt");

@@ -14,7 +14,5 @@ namespace MAH_Pacman.Entity.Components
 
         public Point nextDirection = World.DIRECTION_NONE;
         public Point direction = World.DIRECTION_NONE;
-
-        public int score = 0;
     }
 }

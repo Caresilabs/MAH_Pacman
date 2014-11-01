@@ -11,6 +11,8 @@ namespace MAH_Pacman.Entity.Components
     public class AIComponent : Component
     {
         public static float SIZE = 1;
+        public static float FRIGHTENED_TIME = 4;
+        public static int SCORE = 200;
         
         public float speed = 1.9f;
 

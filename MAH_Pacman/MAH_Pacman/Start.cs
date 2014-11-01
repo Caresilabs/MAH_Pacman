@@ -50,7 +50,7 @@ namespace MAH_Pacman
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Assets.load(Content);
+            Assets.Load(Content);
 
             // init startup screen
             setScreen(getStartScreen());
@@ -58,7 +58,7 @@ namespace MAH_Pacman
 
         protected override void UnloadContent()
         {
-            Assets.unload();
+            Assets.Unload();
         }
 
         protected override void Update(GameTime gameTime)
@@ -112,7 +112,8 @@ namespace MAH_Pacman
 
         private Screen getStartScreen()
         {
-            return new GameScreen();
+            //return new MainMenuScreen();
+            return new MainMenuScreen();
         }
     }
 }

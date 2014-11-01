@@ -36,7 +36,7 @@ namespace MAH_Pacman.Entity.Systems
             {
                 transform.position.X = World.WIDTH - .55f;
             }
-            else if (transform.GetIntY() < 0)
+            else if (transform.position.Y < -.5f)
             {
                 transform.position.Y = World.HEIGHT -1;
             }

@@ -17,7 +17,7 @@ namespace MAH_Pacman.Controller
     /**
      * A game screen that manages the world, renderer and input and put them togheter in a convenient way
      */
-    public class MainMenuScreen : Screen
+    public class MainMenuScreen : Screen, EventListener
     {
         private Scene scene;
 
@@ -27,11 +27,16 @@ namespace MAH_Pacman.Controller
 
         public override void Init()
         {
-            this.scene = new Scene(new Camera2D(GetGraphics(),224, 288));
+            this.scene = new Scene(new Camera2D(GetGraphics(),224, 288), this);
 
-            UIButton button = new UIButton("hello", 10, 10, 2);
-            
-            scene.Add("main", button);
+            UIButton button = new UIButton("GOO!!", scene.GetWidth()/2, 75, 1);
+            scene.Add("start", button);
+
+            UIButton highscores = new UIButton("Highscores", scene.GetWidth() / 2, 125, 1);
+            scene.Add("highscores", highscores);
+
+            UIButton exit = new UIButton("Level Editor", scene.GetWidth() / 2, 175, 1);
+            scene.Add("editor", exit);
         }
 
 
@@ -51,5 +56,24 @@ namespace MAH_Pacman.Controller
 
         }
 
+
+        public void EventCalled(Events e, Actor actor)
+        {
+            if (e == Events.TouchUp)
+            {
+                if (actor.name == "editor")
+                {
+                    SetScreen(new LevelEditorScreen());
+                }
+                if (actor.name == "highscores")
+                {
+                    SetScreen(new HighscoreScreen());
+                }
+                if (actor.name == "start")
+                {
+                    SetScreen(new GameScreen());
+                }
+            }
+        }
     }
 }

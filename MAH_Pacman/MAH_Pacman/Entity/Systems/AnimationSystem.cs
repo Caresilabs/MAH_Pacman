@@ -20,12 +20,12 @@ namespace MAH_Pacman.Entity.Systems
             AnimationComponent animation = entity.GetComponent<AnimationComponent>();
             SpriteComponent sprite = entity.GetComponent<SpriteComponent>();
 
-            animation.stateTime += delta;
-            int currentFrame = (int)(animation.stateTime / (float)animation.frameDuration) % animation.frames;
+            animation.GetCurrent().stateTime += delta;
+            int currentFrame = (int)(animation.GetCurrent().stateTime / (float)animation.GetCurrent().frameDuration) % animation.GetCurrent().frames;
 
             sprite.source = new Rectangle(
-                animation.origin.X + (animation.size*currentFrame), animation.origin.Y, 
-                    animation.size, animation.size);
+                animation.GetCurrent().origin.X + (animation.GetCurrent().size*currentFrame), animation.GetCurrent().origin.Y, 
+                    animation.GetCurrent().size, animation.GetCurrent().size);
 
         }
     }

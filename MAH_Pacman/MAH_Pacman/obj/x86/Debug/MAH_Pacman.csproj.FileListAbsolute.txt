@@ -10,3 +10,5 @@ C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\C
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Font\font.xnb
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\levels.txt
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.csprojResolveAssemblyReference.cache
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\pacman.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\highscore.dat

@@ -12,6 +12,8 @@ namespace MAH_Pacman.Entity.Components
 
         public Vector2 size;
 
+        public bool hasCollision = true;
+
         public int GetIntX()
         {
             return (int)(position.X + .5f);

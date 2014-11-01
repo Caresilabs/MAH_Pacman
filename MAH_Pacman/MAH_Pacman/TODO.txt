@@ -1,30 +1,9 @@
-﻿How to design like a hippie!
-
-Basic Entities:
-	{Tile, Pacman, Ghost, Pellet, Fruit}
-
-	Tile->
-		Background, Collision Type (Wall, or Empty)
-			Wall-> Draw line where neighbour is collision false
-
-	Pacman->
-		Animation Component, Input Component, Movement
-	
-	Ghost->
-		AI Component, Movement, 
-
-	Pellet->
-		Collision, static position
-
-	Fruit->
-		Collision, static position
-
-Entity: Components, Systems
-
-World:
-	{Grid, Entites[]}
-
-	Grid->
-		WorldPositionToGrid, CanEntityMoveForward, GetDirectionsAvailable
-
-
+﻿Poängbonus objekt (~1p)
+ Spelet går att starta om (~1p) check
+ High-Score lista (~1-2p) check
+ Gå ut på ena sidan och kommer in från den andra(~1p) CHECK
+ Power-ups (äta spöken, förstöra väggar mm) (~1-3p) check 1/2
+ Spöken som har ”smartare” AI än helt random (väljer väg, målsökande) (~1-4p) check
+ Level-editor (~2-4p)
+ Meny (~1p)
+ Flera nivåer (~1-2p) check

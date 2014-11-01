@@ -11,11 +11,9 @@ namespace MAH_Pacman.Entity.Systems
         public abstract void Draw(SpriteBatch batch);
 
         public override void Init()
-        {
-        }
+        {}
 
         public override void Update(float delta)
-        {
-        }
+        {}
     }
 }

@@ -13,17 +13,84 @@ namespace MAH_Pacman.Entity.Systems
     public class GridRenderSystem : RenderSystem
     {
         public Camera2D camera;
-        private int wallThickness;
 
-        public GridRenderSystem(GraphicsDevice device)
-        {
-            this.camera = new Camera2D(device, 224, 288);
-            this.wallThickness = (int)(TileComponent.TILE_SIZE / 10);
-        }
+        private List<ScoreEffect> scoreEffects;
+        private Color gridColor;
+        private Color blinkColor;
+
+        private int wallThickness;
+        private bool isBlinking;
+        private float blinkTime;
 
         public override Type[] RequeredComponents()
         {
             return FamilyFor(typeof(GridComponent), typeof(SpriteComponent));
+        }
+
+        public GridRenderSystem(Camera2D camera)
+        {
+            this.scoreEffects = new List<ScoreEffect>();
+            this.camera = camera;
+            this.camera.SetPosition(0, -TileComponent.TILE_SIZE * 2);
+            this.wallThickness = (int)(TileComponent.TILE_SIZE / 10);
+            this.isBlinking = false;
+            this.blinkTime = 0;
+            this.gridColor = Color.White;
+        }
+
+        public void StartBlinking(Color? blinkColor = null)
+        {
+            this.blinkTime = 0;
+            this.isBlinking = true;
+
+            if (blinkColor == null)
+                this.blinkColor = Color.Green;
+            else
+                this.blinkColor = (Color)blinkColor;
+        }
+
+        public void StopBlinking()
+        {
+            this.isBlinking = false;
+        }
+
+        public override void Update(float delta)
+        {
+            base.Update(delta);
+
+            UpdateBlinking(delta);
+            UpdateScoreEffects(delta);
+        }
+
+        private void UpdateScoreEffects(float delta)
+        {
+            for (int i = 0; i < scoreEffects.Count; i++)
+            {
+                ScoreEffect score = scoreEffects[i];
+                score.Update(delta);
+                if (! score.isAlive())
+                {
+                    scoreEffects.Remove(score);
+                }
+            }
+        }
+
+        private void UpdateBlinking(float delta)
+        {
+            if (isBlinking)
+            {
+                blinkTime += delta;
+
+                if (blinkTime > .2f)
+                {
+                    gridColor = blinkColor;
+                }
+                if (blinkTime > .4f)
+                {
+                    gridColor = Color.White;
+                    blinkTime = 0;
+                }
+            }
         }
 
         public override void Draw(SpriteBatch batch)
@@ -46,53 +113,32 @@ namespace MAH_Pacman.Entity.Systems
                     for (int i = 0; i < grid.grid.GetLength(0); i++)
                     {
                         Tile tile = grid.grid[i, j];
+                        tile.Draw(batch, i, j, sprite, gridColor, wallThickness);
 
                         //batch.Draw(sprite.Texture, new Rectangle((int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)                           , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE), sprite.Source, Color.Gray, 0,Vector2.Zero, SpriteEffects.None, .5f);
-
-                        if (tile.HasWallWhere(World.DIRECTION_DOWN))
-                        {
-                            batch.Draw(sprite.texture, new Rectangle(
-                                (int)(i * TileComponent.TILE_SIZE), (int)((j * TileComponent.TILE_SIZE) + TileComponent.TILE_SIZE - wallThickness)
-                                , (int)TileComponent.TILE_SIZE, wallThickness)
-                                , sprite.source, Color.White);
-                        }
-
-                        if (tile.HasWallWhere(World.DIRECTION_UP))
-                        {
-                            batch.Draw(sprite.texture, new Rectangle(
-                                (int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)
-                                , (int)TileComponent.TILE_SIZE, wallThickness)
-                                , sprite.source, Color.White);
-                        }
-
-                        if (tile.HasWallWhere(World.DIRECTION_LEFT))
-                        {
-                            batch.Draw(sprite.texture, new Rectangle(
-                                (int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)
-                                , wallThickness, (int)TileComponent.TILE_SIZE)
-                                , sprite.source, Color.White);
-                        }
-
-                        if (tile.HasWallWhere(World.DIRECTION_RIGHT))
-                        {
-                            batch.Draw(sprite.texture, new Rectangle(
-                                (int)(i * TileComponent.TILE_SIZE + TileComponent.TILE_SIZE - wallThickness), (int)(j * TileComponent.TILE_SIZE)
-                                , wallThickness, (int)TileComponent.TILE_SIZE)
-                                , sprite.source, Color.White);
-                        }
-
-                        if (tile.HasPellet())
-                        {
-                            batch.Draw(sprite.texture, new Rectangle(
-                               (int)(i * TileComponent.TILE_SIZE + TileComponent.TILE_SIZE / 2), (int)(j * TileComponent.TILE_SIZE + TileComponent.TILE_SIZE / 2)
-                               , 2, 2)
-                               , sprite.source, Color.Yellow);
-                        }
                     }
                 }
             }
 
+            // Draw effects
+            for (int i = 0; i < scoreEffects.Count; i++)
+            {
+                ScoreEffect score = scoreEffects[i];
+                score.Draw(batch);
+            }
+
             batch.End();
+        }
+
+        public void AddScoreEffect(float x, float y, int score)
+        {
+            ScoreEffect sc = new ScoreEffect(x, y, score);
+            scoreEffects.Add(sc);
+        }
+
+        public void SetColor(Color color)
+        {
+            this.gridColor = color;
         }
     }
 }

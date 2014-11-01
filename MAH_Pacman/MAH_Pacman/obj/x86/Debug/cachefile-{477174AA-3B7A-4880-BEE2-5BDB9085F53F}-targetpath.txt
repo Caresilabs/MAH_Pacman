@@ -3,4 +3,6 @@ Content\Graphics\bg2.xnb
 Content\Graphics\ui.xnb
 Content\Graphics\items.xnb
 Content\Font\font.xnb
+Content\Graphics\pacman.xnb
 Content\levels.txt
+Content\highscore.dat

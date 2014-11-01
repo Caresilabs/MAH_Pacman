@@ -13,9 +13,16 @@ namespace MAH_Pacman.Entity.Systems
 {
     public class PacmanSystem : EntitySystem
     {
+        private World world;
+
         public override Type[] RequeredComponents()
         {
             return FamilyFor(typeof(PacmanComponent), typeof(MovementComponent));
+        }
+
+        public PacmanSystem(World world)
+        {
+            this.world = world;
         }
 
         public override void Init() { }
@@ -26,10 +33,16 @@ namespace MAH_Pacman.Entity.Systems
             PacmanComponent data = pacman.GetComponent<PacmanComponent>();
             MovementComponent movement = pacman.GetComponent<MovementComponent>();
             TransformationComponent transform = pacman.GetComponent<TransformationComponent>();
+            GridSystem gridSystem = engine.GetSystem<GridSystem>();
 
-            if (engine.GetSystem<GridSystem>().GetTile(transform.GetIntX(), transform.GetIntY()).TryEatPellet())
+            if (gridSystem.GetTile(transform.GetIntX(), transform.GetIntY()).TryEatPellet())
             {
-                data.score += TileComponent.PELLET_SCORE;
+                world.AddScore(TileComponent.PELLET_SCORE, transform.position);
+
+                if (gridSystem.PelletsCount() == 15)
+                {
+                    world.SetState(World.GameState.WIN);
+                }
             }
 
             // Control pacman

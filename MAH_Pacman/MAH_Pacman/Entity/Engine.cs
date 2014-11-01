@@ -20,10 +20,11 @@ namespace MAH_Pacman.Entity
 
         public void Update(float delta)
         {
-            foreach (var system in systems)
+            for (int i = 0; i < systems.Count; i++)
             {
-                if (system.Value.entities.Count != 0)
-                    system.Value.Update(delta);
+                EntitySystem system = systems.Values.ToArray()[i];
+                if (system.entities.Count != 0)
+                    system.Update(delta);
             }
         }
 
@@ -35,7 +36,6 @@ namespace MAH_Pacman.Entity
                 {
                     ((RenderSystem)system.Value).Draw(batch);
                 }
-                    //
             }
         }
 
@@ -49,6 +49,12 @@ namespace MAH_Pacman.Entity
         public void Remove(GameEntity entity)
         {
             entities.Remove(entity);
+            UpdateEntitiesForSystems();
+        }
+
+        public void RemoveAllEntities()
+        {
+            entities.Clear();
             UpdateEntitiesForSystems();
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using MAH_Pacman.Scene2D;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,12 @@ namespace MAH_Pacman.Entity.Components
         public Vector2 origin;
 
         public double rotation;
+
+        public SpriteComponent(TextureRegion region)
+        {
+            this.texture = region;
+            this.source = region;
+        }
 
         public SpriteComponent(Texture2D texture)
         {

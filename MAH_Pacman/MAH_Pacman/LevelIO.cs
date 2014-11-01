@@ -1,4 +1,5 @@
-﻿using MAH_Pacman.Model;
+﻿using MAH_Pacman.Entity;
+using MAH_Pacman.Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -10,16 +11,21 @@ namespace MAH_Pacman
 {
     public static class LevelIO
     {
-        public enum MAP_TILES {
+        public enum MAP_TILES
+        {
             MAP_PASSABLE = 0,
             MAP_BLOCKED = 1,
             MAP_GHOSTONLY = 2,
             MAP_PACMAN = 3,
             MAP_GHOST_BLINKY = 4,
-            MAP_GHOST_INKY = 5,
-            MAP_GHOST_PINKY = 6,
-            MAP_GHOST_CLYDE = 7
+            MAP_GHOST_PINKY = 5,
+            MAP_GHOST_INKY = 6,
+            MAP_GHOST_CLYDE = 7,
+            MAP_ENERGIZER = 8,
+            MAP_FRUIT = 9
         }
+
+        public static int LEVEL_MAX = 0;
 
         public static int[,] ReadLevel(int lvl)
         {
@@ -29,8 +35,9 @@ namespace MAH_Pacman
 
             MatchCollection matches = Regex.Matches(input, @"\[[^\]]+\]");
 
-            string map = matches[lvl - 1].Value.Replace("[", "").Replace("]", "");
+            LEVEL_MAX = matches.Count;
 
+            string map = matches[lvl - 1].Value.Replace("[", "").Replace("]", "");
             string[] stringParts = map.Split(',');
             int[,] loadedMap = new int[World.WIDTH, World.HEIGHT];
 
@@ -45,9 +52,68 @@ namespace MAH_Pacman
             return loadedMap;
         }
 
-        public static void WriteLevel(int[,] levelToWrite)
+        public static void WriteLevel(Tile[,] levelToWrite, int levelNumber)
         {
-            //TODO
+            StreamReader sr = new StreamReader(@"Content/levels.txt");
+            string input = sr.ReadToEnd().ToString();
+            sr.Close();
+
+            string fullMap = input;
+            string partMap = GenerateStringMap(levelToWrite);
+            string finalMap;
+
+            if (levelNumber > LEVEL_MAX)
+            {
+                finalMap = fullMap + partMap;
+            }
+            else
+            {
+                // split map
+                string firstPart;
+                string lastPart;
+
+                firstPart = fullMap.Substring(0, IndexOfNth(fullMap, '[', levelNumber) ); // ad -1 
+                lastPart = fullMap.Substring(IndexOfNth(fullMap, ']', levelNumber) + 1, fullMap.Length - IndexOfNth(fullMap, ']', levelNumber) -1);
+
+                finalMap = firstPart + partMap + lastPart;
+            }
+
+            // Save map
+            StreamWriter sw = new StreamWriter(@"Content/levels.txt");
+            sw.Write(finalMap);
+            sw.Flush();
+            sw.Close();
+        }
+
+        private static string GenerateStringMap(Tile[,] tileMap)
+        {
+            string level = "\n[\n";
+
+            for (int j = 0; j < tileMap.GetLength(1); j++)
+            {
+                for (int i = 0; i < tileMap.GetLength(0); i++)
+                {
+                    level += (int)tileMap[i, j].Type() + ",";
+                }
+                level += "\n";
+            }
+
+            level = level.Substring(0, level.Length - 2);
+            level += "\n]";
+
+            return level;
+        }
+
+        private static int IndexOfNth(string str, char c, int n)
+        {
+            int index = -1;
+            while (n-- > 0)
+            {
+                index = str.IndexOf(c, index + 1);
+                if (index == -1)
+                    break;
+            }
+            return index;
         }
     }
 }

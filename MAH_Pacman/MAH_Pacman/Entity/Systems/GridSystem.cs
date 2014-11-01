@@ -25,17 +25,26 @@ namespace MAH_Pacman.Entity.Systems
 
         public override void Init()
         {
-            for (int j = 0; j < World.HEIGHT; j++)
-            {
-                for (int i = 0; i < World.WIDTH; i++)
-                {
-                    UpdateTileWalls(i, j);
-                }
-            }
+            UpdateAllWalls();
         }
 
         public override void Update(float delta)
         {
+        }
+
+        public int PelletsCount()
+        {
+            int pellets = 0;
+            for (int j = 0; j < entities[0].GetComponent<GridComponent>().grid.GetLength(1); j++)
+            {
+                for (int i = 0; i < entities[0].GetComponent<GridComponent>().grid.GetLength(0); i++)
+                {
+                    Tile tile = entities[0].GetComponent<GridComponent>().grid[i, j];
+                    if (tile.HasPellet())
+                        pellets++;
+                }
+            }
+            return pellets;
         }
 
         public bool IsForwardWalkable(GameEntity entity)
@@ -53,7 +62,7 @@ namespace MAH_Pacman.Entity.Systems
             int signVelocityY = Math.Sign(direction.Y);
 
             Tile tile = GetTileModulus(position.GetIntX() + signVelocityX, position.GetIntY() + signVelocityY);
-            if (tile != null && tile.Type() == Tile.TileType.PASSABLE) 
+            if (tile != null && tile.Type() == Tile.TileType.PASSABLE)
                 return true;
 
             return false;
@@ -82,8 +91,8 @@ namespace MAH_Pacman.Entity.Systems
         {
             //check if he over half the tile
             Vector2 normalPosition = new Vector2(position.position.X + .5f, position.position.Y + .5f) - new Vector2((int)(position.position.X + .5f) + .5f, (int)(position.position.Y + .5f) + .5f);
-            
-            if (! Vector2.Equals(normalPosition, Vector2.Zero))
+
+            if (!Vector2.Equals(normalPosition, Vector2.Zero))
                 normalPosition.Normalize();
 
 
@@ -121,11 +130,22 @@ namespace MAH_Pacman.Entity.Systems
             return entities[0].GetComponent<GridComponent>().grid[x % World.WIDTH, y % World.HEIGHT];
         }
 
+        public void UpdateAllWalls()
+        {
+            for (int j = 0; j < World.HEIGHT; j++)
+            {
+                for (int i = 0; i < World.WIDTH; i++)
+                {
+                    UpdateTileWalls(i, j);
+                }
+            }
+        }
+
         public void UpdateTileWalls(int x, int y)
         {
             Tile tile = GetTile(x, y);
 
-            if (tile != null && tile.Type() != Tile.TileType.BLOCKED) return;
+            if (tile != null && tile.Type() != Tile.TileType.PASSABLE) return;
 
             Point[] walls = new Point[4] { 
                 World.DIRECTION_NONE, World.DIRECTION_NONE,World.DIRECTION_NONE,World.DIRECTION_NONE
@@ -134,22 +154,52 @@ namespace MAH_Pacman.Entity.Systems
             Tile tempTile;
 
             tempTile = GetTileModulus(x, y - 1);
-            if (tempTile != null && tempTile.Type() == Tile.TileType.PASSABLE)
+            if (tempTile != null && tempTile.Type() == Tile.TileType.BLOCKED)
                 walls[0] = World.DIRECTION_UP;
 
             tempTile = GetTileModulus(x, y + 1);
-            if (tempTile != null && tempTile.Type() == Tile.TileType.PASSABLE)
+            if (tempTile != null && tempTile.Type() == Tile.TileType.BLOCKED)
                 walls[1] = World.DIRECTION_DOWN;
 
             tempTile = GetTileModulus(x - 1, y);
-            if (tempTile != null && tempTile.Type() == Tile.TileType.PASSABLE)
+            if (tempTile != null && tempTile.Type() == Tile.TileType.BLOCKED)
                 walls[2] = World.DIRECTION_LEFT;
 
             tempTile = GetTileModulus(x + 1, y);
-            if (tempTile != null && tempTile.Type() == Tile.TileType.PASSABLE)
+            if (tempTile != null && tempTile.Type() == Tile.TileType.BLOCKED)
                 walls[3] = World.DIRECTION_RIGHT;
 
             tile.UpdateWalls(walls);
+
+            // Check topleft
+            UpdateCorner(new Point(-1, -1), tile, x, y, 0);
+            UpdateCorner(new Point(1, -1), tile, x, y, 1);
+            UpdateCorner(new Point(-1, 1), tile, x, y, 2);
+            UpdateCorner(new Point(1, 1), tile, x, y, 3);
+        }
+
+        private void UpdateCorner(Point direction, Tile tile, int x, int y, int id)
+        {
+            Tile[] tiles = GetCornerNeighbours(direction, x, y);
+
+            if (tiles[0].Passable() && tiles[2].Passable()) tile.SetCorner(id, "Out"); // Corner
+            if (!tiles[0].Passable() && tiles[1].Passable() && tiles[2].Passable()) tile.SetCorner(id, "Wall"); // horizontal wall
+            if (tiles[0].Passable() && tiles[1].Passable() && !tiles[2].Passable()) tile.SetCorner(id, "Wall"); // vertical wall
+
+            if (!tiles[0].Passable() && tiles[1].Passable() && !tiles[2].Passable()) tile.SetCorner(id, "In"); // inner
+
+            //if (!tiles[0].Passable() && !tiles[1].Passable() && tiles[2].Passable()) tile.SetCorner(id, "In"); // inner horixontal
+            if (tiles[0].Passable() && !tiles[1].Passable() && !tiles[2].Passable()) tile.SetCorner(id, "In"); // inner vertical
+        }
+
+        private Tile[] GetCornerNeighbours(Point direction, int x, int y) {
+            Tile[] tiles = new Tile[3];
+
+            tiles[0] = GetTileModulus(x + direction.X, y);
+            tiles[1] = GetTileModulus(x + direction.X, y + direction.Y);
+            tiles[2] = GetTileModulus(x, y + direction.Y);
+
+            return tiles;
         }
     }
 }

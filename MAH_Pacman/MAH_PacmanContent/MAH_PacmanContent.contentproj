@@ -62,6 +62,15 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="Graphics\pacman.png">
+      <Name>pacman</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <None Include="highscore.dat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Name>highscore</Name>
+    </None>
     <Content Include="levels.txt">
       <Name>levels</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

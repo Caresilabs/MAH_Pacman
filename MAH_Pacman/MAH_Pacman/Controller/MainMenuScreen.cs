@@ -29,14 +29,17 @@ namespace MAH_Pacman.Controller
         {
             this.scene = new Scene(new Camera2D(GetGraphics(),224, 288), this);
 
-            UIButton button = new UIButton("GOO!!", scene.GetWidth()/2, 75, 1);
+            UIButton button = new UIButton("Goo!", scene.GetWidth()/2, 100, 1);
             scene.Add("start", button);
 
-            UIButton highscores = new UIButton("Highscores", scene.GetWidth() / 2, 125, 1);
+            UIButton highscores = new UIButton("Highscores", scene.GetWidth() / 2, 150, 1);
             scene.Add("highscores", highscores);
 
-            UIButton exit = new UIButton("Level Editor", scene.GetWidth() / 2, 175, 1);
+            UIButton exit = new UIButton("Level Editor", scene.GetWidth() / 2, 200, 1);
             scene.Add("editor", exit);
+
+            UIImage title = new UIImage(Assets.GetRegion("title"), scene.GetWidth() / 2, 60, .5f);
+            scene.Add("title", title);
         }
 
 

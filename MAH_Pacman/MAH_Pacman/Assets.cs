@@ -48,6 +48,12 @@ namespace MAH_Pacman
             LoadRegion("fruit3", items, 0, 96, 16, 16);
             LoadRegion("fruit4", items, 0, 96, 16, 16);
 
+            //ghosts
+            LoadRegion("ghost_blinky", items, 0, 16, 16, 16);
+            LoadRegion("ghost_pinky", items, 0, 32, 16, 16);
+            LoadRegion("ghost_inky", items, 0, 48, 16, 16);
+            LoadRegion("ghost_clyde", items, 0, 62, 16, 16);
+
             // Load tiles
             LoadRegion("tileOut0", ui, 0, 192, 24, 24);
             LoadRegion("tileOut1", ui, 0, 192, 24, 24);
@@ -66,9 +72,10 @@ namespace MAH_Pacman
 
             // others
             LoadRegion("pixel", items, 133, 0, 2, 2);
+            LoadRegion("pixelGreen", items, 130, 0, 2, 2);
 
             // Load UI
-            LoadRegion("title", ui, 0, 0, 512, 64);
+            LoadRegion("title", ui, 0, 0, 290, 48);
             LoadRegion("uiContainer1", ui, 0, 64, 320, 128);
             LoadRegion("button", ui, 320, 64, 192, 64);
 

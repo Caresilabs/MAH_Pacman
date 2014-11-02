@@ -111,30 +111,36 @@ namespace MAH_Pacman.Entity.Components
             var nodes = new List<Point>();
 
             // up
-            if (GetTileModulus(node.X, node.Y - 1).Type() == Tile.TileType.PASSABLE)
+            if (IsPassable(GetTileModulus(node.X, node.Y - 1).Type()))
             {
                 nodes.Add(GetModulusPoint(node.X, node.Y - 1));
             }
 
             // right
-            if (GetTileModulus(node.X + 1, node.Y).Type() == Tile.TileType.PASSABLE)
+            if (IsPassable(GetTileModulus(node.X + 1, node.Y).Type()))
             {
                 nodes.Add(GetModulusPoint(node.X + 1, node.Y));
             }
 
             // down
-            if (GetTileModulus(node.X, node.Y + 1).Type() == Tile.TileType.PASSABLE)
+            if (IsPassable(GetTileModulus(node.X, node.Y + 1).Type()))
             {
                 nodes.Add(GetModulusPoint(node.X, node.Y + 1));
             }
 
             // left
-            if (GetTileModulus(node.X - 1, node.Y).Type() == Tile.TileType.PASSABLE)
+            if (IsPassable(GetTileModulus(node.X - 1, node.Y).Type()))
             {
                 nodes.Add(GetModulusPoint(node.X - 1, node.Y));
             }
 
             return nodes;
+        }
+
+        private bool IsPassable(Tile.TileType type)
+        {
+            if (type == Tile.TileType.PASSABLE || type == Tile.TileType.GHOSTONLY) return true;
+            else return false;
         }
 
         public Tile GetTileModulus(int x, int y)

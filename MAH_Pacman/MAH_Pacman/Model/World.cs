@@ -284,12 +284,14 @@ namespace MAH_Pacman.Model
                 case GameState.BEGIN:
                     break;
                 case GameState.GAMEOVER:
+                    HighscoreManager.SaveHighscore(GetScore());
                      engine.GetSystem<GridRenderSystem>().StartBlinking(Color.Red);
                     engine.Remove<MovementSystem>();
                     engine.Remove<CollisionSystem>();
                     engine.Remove<AnimationSystem>();
                     break;
                 case GameState.WIN:
+                    HighscoreManager.SaveHighscore(GetScore());
                     engine.GetSystem<GridRenderSystem>().StartBlinking();
                     engine.Remove<MovementSystem>();
                     engine.Remove<CollisionSystem>();

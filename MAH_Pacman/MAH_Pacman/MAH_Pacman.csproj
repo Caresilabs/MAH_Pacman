@@ -117,6 +117,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Scene2D\Actor.cs" />
     <Compile Include="Scene2D\TextureRegion.cs" />
+    <Compile Include="Scene2D\UIImage.cs" />
+    <Compile Include="Scene2D\UIText.cs" />
     <Compile Include="Scene2D\UISpriteButton.cs" />
     <Compile Include="Scene2D\UIButton.cs" />
     <Compile Include="Scene2D\Scene.cs" />

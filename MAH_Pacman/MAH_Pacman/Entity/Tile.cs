@@ -20,16 +20,14 @@ namespace MAH_Pacman.Entity
         private Point[] walls;
         private TextureRegion[] corners;
         private TileType type;
+        private LevelIO.MAP_TILES mapType;
 
         private bool hasPellet;
 
         public Tile(int type, bool defaultPellet = true)
         {
-            this.SetType(type);
+            this.SetType((LevelIO.MAP_TILES)type);
             this.hasPellet = this.type == TileType.PASSABLE ? (defaultPellet ? true : false) : false;
-            this.walls = new Point[4] { 
-                World.DIRECTION_NONE, World.DIRECTION_NONE, World.DIRECTION_NONE, World.DIRECTION_NONE
-            };
             this.corners = new TextureRegion[4];
         }
 
@@ -71,6 +69,20 @@ namespace MAH_Pacman.Entity
             //       , (int)TileComponent.TILE_SIZE / 2, (int)TileComponent.TILE_SIZE / 2)
             //        , region, gridColor);
             //}
+
+
+            // Background tile
+            if (type == TileType.GHOSTONLY)
+                batch.Draw(sprite.texture, new Rectangle(
+                        (int)((x * TileComponent.TILE_SIZE)), (int)(y * TileComponent.TILE_SIZE)
+                       , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE)
+                        , sprite.source, Color.SlateBlue, 0, Vector2.Zero, SpriteEffects.None, .1f);
+
+            if (type == TileType.BLOCKED)
+                batch.Draw(sprite.texture, new Rectangle(
+                        (int)((x * TileComponent.TILE_SIZE)), (int)(y * TileComponent.TILE_SIZE)
+                       , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE)
+                        , sprite.source, Color.Gray, 0, Vector2.Zero, SpriteEffects.None, .1f);
 
 
             if (HasWallWhere(World.DIRECTION_DOWN))
@@ -121,9 +133,32 @@ namespace MAH_Pacman.Entity
             corners[corner] = Assets.GetRegion("tile" + type + corner);
         }
 
+        public void SetMapType(LevelIO.MAP_TILES type)
+        {
+            this.mapType = type;
+        }
+
+        public LevelIO.MAP_TILES GetMapType()
+        {
+            return mapType;
+        }
+
         public void SetType(int type)
         {
             this.type = (TileType)type;
+            this.walls = new Point[4] { 
+                World.DIRECTION_NONE, World.DIRECTION_NONE, World.DIRECTION_NONE, World.DIRECTION_NONE
+            };
+        }
+
+        public void SetType(LevelIO.MAP_TILES type)
+        {
+            if ((int)type <= 2)
+                SetType((int)type);
+            else
+                SetType(0);
+
+            SetMapType(type);
         }
 
         public TileType Type()

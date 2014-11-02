@@ -62,7 +62,7 @@ namespace MAH_Pacman.Entity.Systems
             int signVelocityY = Math.Sign(direction.Y);
 
             Tile tile = GetTileModulus(position.GetIntX() + signVelocityX, position.GetIntY() + signVelocityY);
-            if (tile != null && tile.Type() == Tile.TileType.PASSABLE)
+            if (tile != null && IsPassable(tile.Type(),entity))
                 return true;
 
             return false;
@@ -71,6 +71,12 @@ namespace MAH_Pacman.Entity.Systems
         public bool IsWalkable(GameEntity entity, Vector2 direction)
         {
             return IsWalkable(entity, new Point((int)direction.X, (int)direction.Y));
+        }
+
+        private bool IsPassable(Tile.TileType type, GameEntity entity)
+        {
+            if (type == Tile.TileType.PASSABLE || (type == Tile.TileType.GHOSTONLY && entity.HasComponent<AIComponent>())) return true;
+            else return false;
         }
 
         public bool CanTurn(GameEntity entity, Point direction)
@@ -145,7 +151,7 @@ namespace MAH_Pacman.Entity.Systems
         {
             Tile tile = GetTile(x, y);
 
-            if (tile != null && tile.Type() != Tile.TileType.PASSABLE) return;
+            if (tile != null && !(tile.Type() == Tile.TileType.PASSABLE || tile.Type() == Tile.TileType.GHOSTONLY)) return;
 
             Point[] walls = new Point[4] { 
                 World.DIRECTION_NONE, World.DIRECTION_NONE,World.DIRECTION_NONE,World.DIRECTION_NONE
@@ -200,6 +206,19 @@ namespace MAH_Pacman.Entity.Systems
             tiles[2] = GetTileModulus(x, y + direction.Y);
 
             return tiles;
+        }
+
+        public void RemovePacman()
+        {
+            for (int j = 0; j < World.HEIGHT; j++)
+            {
+                for (int i = 0; i < World.WIDTH; i++)
+                {
+                    Tile tile = entities[0].GetComponent<GridComponent>().grid[i, j];
+                    if (tile.GetMapType() == LevelIO.MAP_TILES.MAP_PACMAN)
+                        tile.SetType(LevelIO.MAP_TILES.MAP_PASSABLE);
+                }
+            }
         }
     }
 }

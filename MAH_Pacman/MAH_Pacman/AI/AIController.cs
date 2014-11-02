@@ -21,7 +21,6 @@ namespace MAH_Pacman.AI
         private Point target;
         private Point lastTurn;
         private State state;
-        private GameEntity pacman;
         private GameEntity entity;
 
         private float stateTime;
@@ -32,7 +31,6 @@ namespace MAH_Pacman.AI
             this.spawn = new Point(x, y);
             this.lastTurn = new Point();
             this.entity = ai;
-            this.pacman = World.pacman;
             this.state = State.SCATTER;
             this.stateTime = 0;
             this.ChangedState(state);
@@ -182,7 +180,7 @@ namespace MAH_Pacman.AI
 
         protected void TargetPacman()
         {
-            SetTarget(pacman.GetComponent<TransformationComponent>().GetIntX(), pacman.GetComponent<TransformationComponent>().GetIntY());
+            SetTarget(World.pacman.GetComponent<TransformationComponent>().GetIntX(), World.pacman.GetComponent<TransformationComponent>().GetIntY());
         }
 
         // Return true if pacman dies
@@ -219,7 +217,7 @@ namespace MAH_Pacman.AI
 
         protected GameEntity GetPacman()
         {
-            return pacman;
+            return World.pacman;
         }
 
         protected GameEntity GetEntity()

@@ -37,6 +37,8 @@ namespace MAH_Pacman
 
             LEVEL_MAX = matches.Count;
 
+            if (lvl - 1 >= LEVEL_MAX) return new int[World.WIDTH, World.HEIGHT];
+
             string map = matches[lvl - 1].Value.Replace("[", "").Replace("]", "");
             string[] stringParts = map.Split(',');
             int[,] loadedMap = new int[World.WIDTH, World.HEIGHT];
@@ -72,8 +74,8 @@ namespace MAH_Pacman
                 string firstPart;
                 string lastPart;
 
-                firstPart = fullMap.Substring(0, IndexOfNth(fullMap, '[', levelNumber) ); // ad -1 
-                lastPart = fullMap.Substring(IndexOfNth(fullMap, ']', levelNumber) + 1, fullMap.Length - IndexOfNth(fullMap, ']', levelNumber) -1);
+                firstPart = fullMap.Substring(0, IndexOfNth(fullMap, '[', levelNumber)); // ad -1 
+                lastPart = fullMap.Substring(IndexOfNth(fullMap, ']', levelNumber) + 1, fullMap.Length - IndexOfNth(fullMap, ']', levelNumber) - 1);
 
                 finalMap = firstPart + partMap + lastPart;
             }
@@ -93,7 +95,7 @@ namespace MAH_Pacman
             {
                 for (int i = 0; i < tileMap.GetLength(0); i++)
                 {
-                    level += (int)tileMap[i, j].Type() + ",";
+                    level += (int)tileMap[i, j].GetMapType() + ",";
                 }
                 level += "\n";
             }
@@ -114,6 +116,31 @@ namespace MAH_Pacman
                     break;
             }
             return index;
+        }
+
+        public static void DeleteLastLevel()
+        {
+            StreamReader sr = new StreamReader(@"Content/levels.txt");
+            string input = sr.ReadToEnd().ToString();
+            sr.Close();
+
+            int levelNumber = LEVEL_MAX;
+            string fullMap = input;
+            string finalMap;
+
+            // split map
+            string firstPart;
+
+            firstPart = fullMap.Substring(0, IndexOfNth(fullMap, '[', levelNumber));
+            finalMap = firstPart;
+
+            // Save map
+            StreamWriter sw = new StreamWriter(@"Content/levels.txt");
+            sw.Write(finalMap);
+            sw.Flush();
+            sw.Close();
+
+            LEVEL_MAX--;
         }
     }
 }

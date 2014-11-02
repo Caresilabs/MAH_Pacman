@@ -16,7 +16,7 @@ namespace MAH_Pacman
 {
     public class Start : Microsoft.Xna.Framework.Game
     {
-        public const string GAME_NAME = "Pacmoma";
+        public const string GAME_NAME = "Pacman";
 
         private static GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;

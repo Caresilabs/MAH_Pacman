@@ -4,6 +4,6 @@
  Gå ut på ena sidan och kommer in från den andra(~1p) CHECK
  Power-ups (äta spöken, förstöra väggar mm) (~1-3p) check 1/2
  Spöken som har ”smartare” AI än helt random (väljer väg, målsökande) (~1-4p) check
- Level-editor (~2-4p)
- Meny (~1p)
+ Level-editor (~2-4p) CHECK
+ Meny (~1p) CHECK
  Flera nivåer (~1-2p) check

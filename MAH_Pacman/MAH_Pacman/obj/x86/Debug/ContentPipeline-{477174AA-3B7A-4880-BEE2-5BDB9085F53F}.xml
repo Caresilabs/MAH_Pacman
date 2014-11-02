@@ -35,7 +35,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\items.xnb</Output>
-      <Time>2014-10-23T13:57:20.3356835+02:00</Time>
+      <Time>2014-11-02T15:44:14.5810145+01:00</Time>
     </Item>
     <Item>
       <Source>Font\font.spritefont</Source>
@@ -53,7 +53,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\pacman.xnb</Output>
-      <Time>2014-10-23T18:26:54.13645+02:00</Time>
+      <Time>2014-11-02T16:30:11.4977011+01:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

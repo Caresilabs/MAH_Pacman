@@ -82,14 +82,12 @@ namespace MAH_Pacman.Controller
                 case World.GameState.GAMEOVER:
                     if (InputHandler.Clicked())
                     {
-                        HighscoreManager.SaveHighscore(world.GetScore());
                         SetScreen(new MainMenuScreen());
                     }
                     break;
                 case World.GameState.WIN:
                     if (world.GetLevel() == LevelIO.LEVEL_MAX)
                     {
-                        HighscoreManager.SaveHighscore(world.GetScore());
                         SetScreen(new MainMenuScreen());
                     }
                     else

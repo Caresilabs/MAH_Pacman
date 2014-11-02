@@ -25,9 +25,6 @@ namespace MAH_Pacman.Controller
         private Rectangle field;
         private LevelIO.MAP_TILES currentTile;
 
-        private UIWindow selectTileWindow;
-
-        private float stateTime;
         private int level;
 
         public override void Init()
@@ -58,7 +55,6 @@ namespace MAH_Pacman.Controller
         private void InitUI()
         {
             UIButton currentTileButton = new UIButton("Play!", TileComponent.TILE_SIZE * 2, -TileComponent.TILE_SIZE * 1.5f, .7f);
-
             scene.Add("currentTileButton", currentTileButton);
         }
 
@@ -105,8 +101,6 @@ namespace MAH_Pacman.Controller
 
         public override void Update(float delta)
         {
-            stateTime += delta;
-
             scene.Update(delta);
             engine.Update(delta);
             UpdateInput();
@@ -170,7 +164,6 @@ namespace MAH_Pacman.Controller
                     Init();
                 }
             }
-
 
             // Change tile
             if (InputHandler.KeyReleased(Keys.D1))

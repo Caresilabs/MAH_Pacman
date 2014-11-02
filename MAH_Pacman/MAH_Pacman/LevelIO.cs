@@ -27,6 +27,7 @@ namespace MAH_Pacman
 
         public static int LEVEL_MAX = 0;
 
+        // Read level
         public static int[,] ReadLevel(int lvl)
         {
             StreamReader sr = new StreamReader(@"Content/levels.txt");
@@ -54,6 +55,7 @@ namespace MAH_Pacman
             return loadedMap;
         }
 
+        // Write level to file
         public static void WriteLevel(Tile[,] levelToWrite, int levelNumber)
         {
             StreamReader sr = new StreamReader(@"Content/levels.txt");
@@ -87,6 +89,7 @@ namespace MAH_Pacman
             sw.Close();
         }
 
+        // Generate intmap from tilemap
         private static string GenerateStringMap(Tile[,] tileMap)
         {
             string level = "\n[\n";
@@ -106,6 +109,7 @@ namespace MAH_Pacman
             return level;
         }
 
+        // Get index of nth character
         private static int IndexOfNth(string str, char c, int n)
         {
             int index = -1;
@@ -118,6 +122,7 @@ namespace MAH_Pacman
             return index;
         }
 
+        // Delete the last level
         public static void DeleteLastLevel()
         {
             StreamReader sr = new StreamReader(@"Content/levels.txt");

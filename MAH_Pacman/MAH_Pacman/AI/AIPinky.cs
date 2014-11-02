@@ -51,6 +51,8 @@ namespace MAH_Pacman.AI
 
         protected override void TargetReached()
         {
+            base.TargetReached();
+
             switch (GetState())
             {
                 case State.SCATTER:

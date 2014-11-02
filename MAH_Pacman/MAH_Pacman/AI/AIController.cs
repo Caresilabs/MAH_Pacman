@@ -36,7 +36,7 @@ namespace MAH_Pacman.AI
             this.ChangedState(state);
         }
 
-        protected abstract void TargetReached();
+        protected virtual void TargetReached() { }
 
         protected abstract void ChangedState(State state);
 
@@ -61,7 +61,7 @@ namespace MAH_Pacman.AI
                         SetState(State.CHASE);
                     break;
                 case State.CHASE:
-                    if (stateTime > 7)
+                    if (stateTime > 3)
                         SetState(State.NORMAL);
                     break;
                 case State.FRIGHTENED:
@@ -237,17 +237,15 @@ namespace MAH_Pacman.AI
             // update state
             switch (state)
             {
+                case State.NORMAL:
                 case State.SCATTER:
-                    entity.GetComponent<AnimationComponent>().Set("walk");
-                    break;
                 case State.CHASE:
                     entity.GetComponent<AnimationComponent>().Set("walk");
+                    entity.GetComponent<TransformationComponent>().hasCollision = true;
                     break;
                 case State.FRIGHTENED:
                     entity.GetComponent<AnimationComponent>().Set("frightened");
-                    break;
-                case State.NORMAL:
-                    entity.GetComponent<AnimationComponent>().Set("walk");
+                    entity.GetComponent<TransformationComponent>().hasCollision = true;
                     break;
                 case State.DEAD:
                     entity.GetComponent<AnimationComponent>().Set("dead");
@@ -283,6 +281,7 @@ namespace MAH_Pacman.AI
         {
             this.target = new Point();
             this.entity.GetComponent<TransformationComponent>().position = new Vector2(spawn.X, spawn.Y);
+            entity.GetComponent<TransformationComponent>().hasCollision = true;
             SetState(State.SCATTER);
         }
     }

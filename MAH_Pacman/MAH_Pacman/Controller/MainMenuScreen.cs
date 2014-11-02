@@ -21,15 +21,11 @@ namespace MAH_Pacman.Controller
     {
         private Scene scene;
 
-        public MainMenuScreen()
-        {
-        }
-
         public override void Init()
         {
             this.scene = new Scene(new Camera2D(GetGraphics(),224, 288), this);
 
-            UIButton button = new UIButton("Goo!", scene.GetWidth()/2, 100, 1);
+            UIButton button = new UIButton("Play!", scene.GetWidth()/2, 100, 1);
             scene.Add("start", button);
 
             UIButton highscores = new UIButton("Highscores", scene.GetWidth() / 2, 150, 1);

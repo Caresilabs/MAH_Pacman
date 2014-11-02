@@ -68,7 +68,7 @@ namespace MAH_Pacman
                     DrawCenterString(batch, screen.GetCamera(), "GAMEOVER!", screen.GetCamera().GetPosition().Y + screen.GetCamera().GetHeight() / 2 - 27, .5f);
                     DrawCenterString(batch, screen.GetCamera(), "Score: " + world.GetScore(), screen.GetCamera().GetPosition().Y + screen.GetCamera().GetHeight() / 2, .4f);
 
-                    DrawCenterString(batch, screen.GetCamera(), "Click to continue...", screen.GetCamera().GetPosition().Y + screen.GetCamera().GetHeight() / 2 + 20, .25f);
+                    DrawCenterString(batch, screen.GetCamera(), "Insert Coin to continue...", screen.GetCamera().GetPosition().Y + screen.GetCamera().GetHeight() / 2 + 20, .25f);
                     break;
                 case World.GameState.WIN:
                     DrawCenterString(batch, screen.GetCamera(), "GRATZ!!", screen.GetCamera().GetPosition().Y + screen.GetCamera().GetHeight() / 2 - 20, Color.Magenta, .35f);

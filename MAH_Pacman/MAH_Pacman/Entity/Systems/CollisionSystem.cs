@@ -33,6 +33,7 @@ namespace MAH_Pacman.Entity.Systems
             {
                 for (int i = 0; i < entities.Count; i++)
                 {
+                    if (j >= entities.Count) break;
                     GameEntity e1 = entities[j];
                     GameEntity e2 = entities[i];
 

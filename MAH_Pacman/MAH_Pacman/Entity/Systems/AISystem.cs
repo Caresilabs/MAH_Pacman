@@ -30,7 +30,7 @@ namespace MAH_Pacman.Entity.Systems
                 }
                 else if (frightTime >= AIComponent.FRIGHTENED_TIME / 3) //end fright
                 {
-
+                    // todo
                 }
             }
         }

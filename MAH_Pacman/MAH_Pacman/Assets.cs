@@ -16,7 +16,7 @@ namespace MAH_Pacman
 */
     public class Assets
     {
-        public const bool SOUND = true;
+        public const bool SOUND = false;
 
         private static Dictionary<String, TextureRegion> regions;
         private static ContentManager manager;

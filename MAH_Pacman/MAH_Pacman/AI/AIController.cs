@@ -63,7 +63,7 @@ namespace MAH_Pacman.AI
             switch (state)
             {
                 case State.SCATTER:
-                    if (stateTime > 5)
+                    if (stateTime > 4.5f)
                         SetState(State.CHASE);
                     break;
                 case State.CHASE:
@@ -73,6 +73,8 @@ namespace MAH_Pacman.AI
                 case State.FRIGHTENED:
                     break;
                 case State.NORMAL:
+                    if (stateTime > 12)
+                        SetState(State.SCATTER);
                     break;
                 case State.DEAD:
                     break;

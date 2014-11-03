@@ -114,8 +114,6 @@ namespace MAH_Pacman.Entity.Systems
                     {
                         Tile tile = grid.grid[i, j];
                         tile.Draw(batch, i, j, sprite, gridColor, wallThickness);
-
-                        //batch.Draw(sprite.Texture, new Rectangle((int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)                           , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE), sprite.Source, Color.Gray, 0,Vector2.Zero, SpriteEffects.None, .5f);
                     }
                 }
             }

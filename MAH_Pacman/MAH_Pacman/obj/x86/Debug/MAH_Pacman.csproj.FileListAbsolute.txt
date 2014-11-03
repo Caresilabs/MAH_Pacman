@@ -12,3 +12,6 @@ C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\C
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\obj\x86\Debug\MAH_Pacman.csprojResolveAssemblyReference.cache
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Graphics\pacman.xnb
 C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\highscore.dat
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\pacman_beginning.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\pacman_chomp.xnb
+C:\Users\Simon\Documents\GitHub\MAH_Pacman\MAH_Pacman\MAH_Pacman\bin\x86\Debug\Content\Audio\pacman_death.xnb

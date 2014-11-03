@@ -27,10 +27,10 @@ namespace MAH_Pacman.Controller
 
         private float stateTime;
 
-        public GameScreen(int level = 1)
+        public GameScreen(int level = 1, int score = 0)
         {
             this.engine = new Engine();
-            this.world = new World(engine, level);
+            this.world = new World(engine, level, score);
             this.hud = new HUD(this);
         }
 
@@ -67,9 +67,7 @@ namespace MAH_Pacman.Controller
             hud.Update(delta);
 
             if (world.Update(delta))
-            {
                 stateTime = 0;
-            }
 
             switch (world.GetState())
             {
@@ -81,21 +79,19 @@ namespace MAH_Pacman.Controller
                     break;
                 case World.GameState.GAMEOVER:
                     if (InputHandler.Clicked())
-                    {
                         SetScreen(new MainMenuScreen());
-                    }
                     break;
                 case World.GameState.WIN:
-                    if (world.GetLevel() == LevelIO.LEVEL_MAX)
+                    if (world.GetLevel() == LevelIO.LEVEL_MAX) 
                     {
-                        SetScreen(new MainMenuScreen());
+                        // Complete the game!
+                        SetScreen(new WinScreen());
                     }
-                    else
+                    else 
                     {
+                        // Next level
                         if (stateTime > 5)
-                        {
-                            SetScreen(new GameScreen(world.GetLevel() + 1));
-                        }
+                            SetScreen(new GameScreen(world.GetLevel() + 1, world.GetScore()));
                     }
                     break;
                 default:

@@ -19,6 +19,7 @@ namespace MAH_Pacman.AI
         {
             switch (state)
             {
+                case State.DEAD:
                 case State.SCATTER:
                     SetTarget(GetSpawn());
                     break;
@@ -28,9 +29,6 @@ namespace MAH_Pacman.AI
                 case State.FRIGHTENED:
                 case State.NORMAL:
                     TargetTile();
-                    break;
-                case State.DEAD:
-                    SetTarget(GetSpawn());
                     break;
                 default:
                     break;
@@ -64,17 +62,13 @@ namespace MAH_Pacman.AI
             switch (GetState())
             {
                 case State.SCATTER:
-                    //TargetPacman();
-                    // Scatter while we say so
                     break;
                 case State.CHASE:
+                case State.NORMAL:
                     TargetPacman();
                     break;
                 case State.FRIGHTENED:
                     SetTarget(GetSpawn());
-                    break;
-                case State.NORMAL:
-                    TargetPacman();
                     break;
                 case State.DEAD:
                     SetState(State.NORMAL);

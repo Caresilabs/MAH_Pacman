@@ -72,23 +72,6 @@ namespace MAH_Pacman.Controller
                 for (int i = 0; i < World.WIDTH; i++)
                 {
                     int type = inputMap[i, j];
-
-                    switch (type)
-                    {
-                        case (int)LevelIO.MAP_TILES.MAP_PACMAN:
-                            break;
-                        case (int)LevelIO.MAP_TILES.MAP_GHOST_BLINKY:
-                        case (int)LevelIO.MAP_TILES.MAP_GHOST_INKY:
-                        case (int)LevelIO.MAP_TILES.MAP_GHOST_PINKY:
-                        case (int)LevelIO.MAP_TILES.MAP_GHOST_CLYDE:
-                            break;
-                        case (int)LevelIO.MAP_TILES.MAP_ENERGIZER:
-                            break;
-                        case (int)LevelIO.MAP_TILES.MAP_FRUIT:
-                            break;
-                        default:
-                            break;
-                    }
                     grid.grid[i, j] = new Tile(type, false);
                 }
             }
@@ -204,10 +187,10 @@ namespace MAH_Pacman.Controller
 
             DrawTiles(batch);
 
+            // Draw level
             HUD.DrawCenterString(batch, camera, "Level " + level, -TileComponent.TILE_SIZE * 1.5f, .35f);
 
             batch.End();
-
         }
 
         private void DrawTiles(SpriteBatch batch)
@@ -230,9 +213,9 @@ namespace MAH_Pacman.Controller
 
                     if (GetRegionFor(t.GetMapType(), true) != null)
                         batch.Draw(GetRegionFor(t.GetMapType()), new Rectangle(
-                           (int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE)
-                          , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE)
-                           , GetRegionFor(t.GetMapType()), Color.White, 0, Vector2.Zero, SpriteEffects.None, .4f);
+                           (int)(i * TileComponent.TILE_SIZE), (int)(j * TileComponent.TILE_SIZE),
+                           (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE),
+                            GetRegionFor(t.GetMapType()), Color.White, 0, Vector2.Zero, SpriteEffects.None, .4f);
                 }
             }
         }
@@ -244,9 +227,9 @@ namespace MAH_Pacman.Controller
                 case LevelIO.MAP_TILES.MAP_PASSABLE:
                     return specialsOnly ? null : Assets.GetRegion("pixel");
                 case LevelIO.MAP_TILES.MAP_BLOCKED:
-                    return specialsOnly ? null : Assets.GetRegion("pixel");
+                    return specialsOnly ? null : Assets.GetRegion("tileBlocked");
                 case LevelIO.MAP_TILES.MAP_GHOSTONLY:
-                    return specialsOnly ? null : Assets.GetRegion("pixelGreen");
+                    return specialsOnly ? null : Assets.GetRegion("tileGhost");
                 case LevelIO.MAP_TILES.MAP_PACMAN:
                     return Assets.GetRegion("pacman");
                 case LevelIO.MAP_TILES.MAP_GHOST_BLINKY:

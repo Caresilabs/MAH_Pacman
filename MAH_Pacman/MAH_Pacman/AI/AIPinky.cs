@@ -56,8 +56,6 @@ namespace MAH_Pacman.AI
             switch (GetState())
             {
                 case State.SCATTER:
-                    //TargetPacman();
-                    // Scatter while we say so
                     break;
                 case State.CHASE:
                     TargetPacman();

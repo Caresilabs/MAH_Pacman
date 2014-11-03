@@ -86,8 +86,6 @@ namespace MAH_Pacman.Entity.Systems
 
             if (HasWalkedHalf(direction, position))
             {
-                //Tile tile = GetTile(position.GetIntX() + direction.X, position.GetIntY() + direction.Y);
-                ///if (tile != null && tile.Type() == Tile.TileType.PASSABLE) return true;
                 return true;
             }
             return false;
@@ -177,14 +175,15 @@ namespace MAH_Pacman.Entity.Systems
 
             tile.UpdateWalls(walls);
 
-            // Check topleft
+            /* Check topleft
             UpdateCorner(new Point(-1, -1), tile, x, y, 0);
             UpdateCorner(new Point(1, -1), tile, x, y, 1);
             UpdateCorner(new Point(-1, 1), tile, x, y, 2);
             UpdateCorner(new Point(1, 1), tile, x, y, 3);
+             */
         }
 
-        private void UpdateCorner(Point direction, Tile tile, int x, int y, int id)
+        /*private void UpdateCorner(Point direction, Tile tile, int x, int y, int id)
         {
             Tile[] tiles = GetCornerNeighbours(direction, x, y);
 
@@ -196,7 +195,7 @@ namespace MAH_Pacman.Entity.Systems
 
             //if (!tiles[0].Passable() && !tiles[1].Passable() && tiles[2].Passable()) tile.SetCorner(id, "In"); // inner horixontal
             if (tiles[0].Passable() && !tiles[1].Passable() && !tiles[2].Passable()) tile.SetCorner(id, "In"); // inner vertical
-        }
+        }*/
 
         private Tile[] GetCornerNeighbours(Point direction, int x, int y) {
             Tile[] tiles = new Tile[3];

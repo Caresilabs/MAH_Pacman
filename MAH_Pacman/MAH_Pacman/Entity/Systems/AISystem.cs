@@ -73,5 +73,10 @@ namespace MAH_Pacman.Entity.Systems
                 ai.controller.Respawn();
             }
         }
+
+        public bool IsFrighted()
+        {
+            return isFrighted;
+        }
     }
 }

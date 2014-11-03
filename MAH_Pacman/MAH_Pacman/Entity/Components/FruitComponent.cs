@@ -9,6 +9,6 @@ namespace MAH_Pacman.Entity.Components
 {
     public class FruitComponent : Component
     {
-        public static int SCORE = 100;
+        public const int SCORE = 100;
     }
 }

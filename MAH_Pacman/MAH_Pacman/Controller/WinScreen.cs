@@ -17,19 +17,15 @@ namespace MAH_Pacman.Controller
     /**
      * A game screen that manages the world, renderer and input and put them togheter in a convenient way
      */
-    public class HighscoreScreen : Screen
+    public class WinScreen : Screen
     {
-        private int[] highscores;
-
         public override void Init()
         {
-            this.highscores = HighscoreManager.GetHighscores();
         }
-
 
         public override void Update(float delta)
         {
-            if (InputHandler.KeyReleased(Keys.M))
+            if (InputHandler.Clicked())
                 SetScreen(new MainMenuScreen());
         }
 
@@ -45,18 +41,16 @@ namespace MAH_Pacman.Controller
                     Assets.GetRegion("bg"), Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
 
             // Draw title
-            batch.DrawString(Assets.font, "HIGHSCORES", new Vector2(GetGraphics().Viewport.Width / 2 - 120, 40), Color.YellowGreen);
+            batch.DrawString(Assets.font, "WOOOW DUUDE!!\n  congratulations!", new Vector2(GetGraphics().Viewport.Width / 2 - 170, 80), Color.YellowGreen);
 
-            // Draw highscores
-            for (int i = 0; i < highscores.Length; i++)
-            {
-                batch.DrawString(Assets.font, (i + 1) + ". " + highscores[i].ToString(), new Vector2(GetGraphics().Viewport.Width / 2 - 90, 150 + i * 60), Color.Black);
-            }
+            batch.DrawString(Assets.font, "You are Winner!", new Vector2(GetGraphics().Viewport.Width / 2 - 150, GetGraphics().Viewport.Height / 2), Color.Black);
+
             batch.End();
         }
 
         public override void Dispose()
         {
+
         }
     }
 }

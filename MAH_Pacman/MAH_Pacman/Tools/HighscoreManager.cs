@@ -26,7 +26,8 @@ namespace MAH_Pacman.Tools
 
             for (int i = 0; i < highscores.Count - 1; i++)
             {
-                output += "\n" + highscores[i];
+                output += highscores[i];
+                if (i != highscores.Count - 1) output += "\n";
             }
             writer.Write(output);
             

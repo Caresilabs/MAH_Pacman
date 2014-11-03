@@ -16,7 +16,7 @@ namespace MAH_Pacman
 */
     public class Assets
     {
-        public const bool SOUND = false;
+        public const bool SOUND = true;
 
         private static Dictionary<String, TextureRegion> regions;
         private static ContentManager manager;
@@ -26,8 +26,9 @@ namespace MAH_Pacman
 
         public static SpriteFont font;
 
-        public static SoundEffect bombSound;
-        public static SoundEffect missSound;
+        public static SoundEffect introSound;
+        public static SoundEffect eatSound;
+        public static SoundEffect deathSound;
         public static Song music;
 
         public static void Load(ContentManager manager)
@@ -70,14 +71,17 @@ namespace MAH_Pacman
             LoadRegion("tileWall2", ui, 48, 192, 24, 24);
             LoadRegion("tileWall3", ui, 48, 192, 24, 24);
 
+            LoadRegion("tileGhost", ui, 0, 240, 48, 48);
+            LoadRegion("tileBlocked", ui, 48, 240, 48, 48);
+
             // others
             LoadRegion("pixel", items, 133, 0, 2, 2);
-            LoadRegion("pixelGreen", items, 130, 0, 2, 2);
 
             // Load UI
             LoadRegion("title", ui, 0, 0, 290, 48);
-            LoadRegion("uiContainer1", ui, 0, 64, 320, 128);
+            LoadRegion("uiContainer", ui, 0, 64, 288, 128);
             LoadRegion("button", ui, 320, 64, 192, 64);
+            LoadRegion("bg", ui, 272, 192, 240, 307);
 
             // Load font 
             font = manager.Load<SpriteFont>("Font/font");
@@ -85,11 +89,13 @@ namespace MAH_Pacman
             // load sound
             if (SOUND)
             {
-                //missSound = manager.Load<SoundEffect>("Audio/miss");
-                music = manager.Load<Song>("Audio/music");
-                MediaPlayer.Volume = .8f;
-                MediaPlayer.IsRepeating = true;
-                MediaPlayer.Play(music);
+                introSound = manager.Load<SoundEffect>("Audio/pacman_beginning");
+                eatSound = manager.Load<SoundEffect>("Audio/pacman_chomp");
+                deathSound = manager.Load<SoundEffect>("Audio/pacman_death");
+                //music = manager.Load<Song>("Audio/music");
+                //MediaPlayer.Volume = .8f;
+                //MediaPlayer.IsRepeating = true;
+                //MediaPlayer.Play(music);
             }
         }
 

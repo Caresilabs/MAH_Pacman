@@ -19,6 +19,7 @@ namespace MAH_Pacman.AI
         {
             switch (state)
             {
+                case State.DEAD:
                 case State.SCATTER:
                     SetTarget(GetSpawn());
                     break;
@@ -28,9 +29,6 @@ namespace MAH_Pacman.AI
                 case State.FRIGHTENED:
                 case State.NORMAL:
                     TargetTile();
-                    break;
-                case State.DEAD:
-                    SetTarget(GetSpawn());
                     break;
                 default:
                     break;
@@ -53,11 +51,6 @@ namespace MAH_Pacman.AI
             target = pt.position + delta;
 
             SetTarget((int)target.X, (int)target.Y);
-
-            /* To locate Inky’s target, we first start by selecting the position 
-             * two tiles in front of Pac-Man in his current direction of travel, similar to Pinky’s targeting method. 
-             * From there, imagine drawing a vector from Blinky’s position to this tile, and then doubling the length of the vector.
-             * The tile that this new, extended vector ends on will be Inky’s actual target.*/
         }
 
         protected override void TargetReached()
@@ -67,17 +60,13 @@ namespace MAH_Pacman.AI
             switch (GetState())
             {
                 case State.SCATTER:
-                    //TargetPacman();
-                    // Scatter while we say so
                     break;
                 case State.CHASE:
+                case State.NORMAL:
                     TargetPacman();
                     break;
                 case State.FRIGHTENED:
                     SetTarget(GetSpawn());
-                    break;
-                case State.NORMAL:
-                    TargetPacman();
                     break;
                 case State.DEAD:
                     SetState(State.NORMAL);

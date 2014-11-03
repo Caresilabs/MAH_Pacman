@@ -47,6 +47,13 @@ namespace MAH_Pacman.Controller
         public override void Draw(SpriteBatch batch)
         {
             GetGraphics().Clear(Color.Black);
+
+            batch.Begin();
+            batch.Draw(Assets.GetRegion("bg"), 
+                new Rectangle(0, 0, batch.GraphicsDevice.Viewport.Width, batch.GraphicsDevice.Viewport.Height),
+                    Assets.GetRegion("bg"), Color.White, 0, Vector2.Zero, SpriteEffects.None, 1);
+            batch.End();
+
             scene.Draw(batch);
         }
 
@@ -54,7 +61,6 @@ namespace MAH_Pacman.Controller
         {
 
         }
-
 
         public void EventCalled(Events e, Actor actor)
         {

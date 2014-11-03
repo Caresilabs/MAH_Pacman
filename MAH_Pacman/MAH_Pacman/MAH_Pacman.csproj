@@ -79,6 +79,7 @@
     <Compile Include="AI\AIPinky.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Assets.cs" />
+    <Compile Include="Controller\WinScreen.cs" />
     <Compile Include="Controller\LevelEditorScreen.cs" />
     <Compile Include="Controller\HighscoreScreen.cs" />
     <Compile Include="Controller\MainMenuScreen.cs" />

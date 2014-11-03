@@ -18,7 +18,6 @@ namespace MAH_Pacman.Entity
         }
 
         private Point[] walls;
-        private TextureRegion[] corners;
         private TileType type;
         private LevelIO.MAP_TILES mapType;
 
@@ -28,61 +27,22 @@ namespace MAH_Pacman.Entity
         {
             this.SetType((LevelIO.MAP_TILES)type);
             this.hasPellet = this.type == TileType.PASSABLE ? (defaultPellet ? true : false) : false;
-            this.corners = new TextureRegion[4];
         }
 
         public void Draw(SpriteBatch batch, int x, int y, SpriteComponent sprite, Color gridColor, int wallThickness)
         {
-
-            //if (corners[0] != null)
-            //{
-            //    TextureRegion region = corners[0];
-            //    batch.Draw(region, new Rectangle(
-            //        (int)(x * TileComponent.TILE_SIZE), (int)(y * TileComponent.TILE_SIZE)
-            //       , (int)TileComponent.TILE_SIZE / 2, (int)TileComponent.TILE_SIZE / 2)
-            //        , region, gridColor);
-            //}
-
-            //if (corners[1] != null)
-            //{
-            //    TextureRegion region = corners[1];
-            //    batch.Draw(region, new Rectangle(
-            //        (int)((x * TileComponent.TILE_SIZE) + TileComponent.TILE_SIZE / 2), (int)(y * TileComponent.TILE_SIZE)
-            //       , (int)TileComponent.TILE_SIZE / 2, (int)TileComponent.TILE_SIZE / 2)
-            //        , region, gridColor);
-            //}
-
-            //if (corners[2] != null)
-            //{
-            //    TextureRegion region = corners[2];
-            //    batch.Draw(region, new Rectangle(
-            //        (int)(x * TileComponent.TILE_SIZE), (int)(y * TileComponent.TILE_SIZE + TileComponent.TILE_SIZE / 2)
-            //       , (int)TileComponent.TILE_SIZE / 2, (int)TileComponent.TILE_SIZE / 2)
-            //        , region, gridColor);
-            //}
-
-            //if (corners[3] != null)
-            //{
-            //    TextureRegion region = corners[3];
-            //    batch.Draw(region, new Rectangle(
-            //        (int)((x * TileComponent.TILE_SIZE) + TileComponent.TILE_SIZE / 2), (int)(y * TileComponent.TILE_SIZE + TileComponent.TILE_SIZE / 2)
-            //       , (int)TileComponent.TILE_SIZE / 2, (int)TileComponent.TILE_SIZE / 2)
-            //        , region, gridColor);
-            //}
-
-
             // Background tile
             if (type == TileType.GHOSTONLY)
-                batch.Draw(sprite.texture, new Rectangle(
+                batch.Draw(Assets.GetRegion("tileGhost"), new Rectangle(
                         (int)((x * TileComponent.TILE_SIZE)), (int)(y * TileComponent.TILE_SIZE)
                        , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE)
-                        , sprite.source, Color.SlateBlue, 0, Vector2.Zero, SpriteEffects.None, .1f);
+                        , Assets.GetRegion("tileGhost"), Color.White, 0, Vector2.Zero, SpriteEffects.None, .1f); //SlateBlue
 
             if (type == TileType.BLOCKED)
-                batch.Draw(sprite.texture, new Rectangle(
+                batch.Draw(Assets.GetRegion("tileBlocked"), new Rectangle(
                         (int)((x * TileComponent.TILE_SIZE)), (int)(y * TileComponent.TILE_SIZE)
                        , (int)TileComponent.TILE_SIZE, (int)TileComponent.TILE_SIZE)
-                        , sprite.source, Color.Gray, 0, Vector2.Zero, SpriteEffects.None, .1f);
+                        , Assets.GetRegion("tileBlocked"), gridColor, 0, Vector2.Zero, SpriteEffects.None, .1f);
 
 
             if (HasWallWhere(World.DIRECTION_DOWN))
@@ -126,11 +86,6 @@ namespace MAH_Pacman.Entity
                    2, 2),
                    sprite.source, Color.Yellow);
             }
-        }
-
-        public void SetCorner(int corner, string type)
-        {
-            corners[corner] = Assets.GetRegion("tile" + type + corner);
         }
 
         public void SetMapType(LevelIO.MAP_TILES type)

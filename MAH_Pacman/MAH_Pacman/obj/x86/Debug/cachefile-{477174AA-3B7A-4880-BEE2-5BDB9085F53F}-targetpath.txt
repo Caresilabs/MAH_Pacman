@@ -4,5 +4,8 @@ Content\Graphics\ui.xnb
 Content\Graphics\items.xnb
 Content\Font\font.xnb
 Content\Graphics\pacman.xnb
+Content\Audio\pacman_beginning.xnb
+Content\Audio\pacman_chomp.xnb
+Content\Audio\pacman_death.xnb
 Content\levels.txt
 Content\highscore.dat

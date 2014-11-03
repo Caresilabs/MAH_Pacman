@@ -39,10 +39,13 @@ namespace MAH_Pacman.Entity.Systems
             {
                 world.AddScore(TileComponent.PELLET_SCORE, transform.position);
 
-                if (gridSystem.PelletsCount() == 15)
+                if (gridSystem.PelletsCount() == 0) 
                 {
                     world.SetState(World.GameState.WIN);
                 }
+
+                if (Assets.SOUND)
+                    Assets.eatSound.Play();
             }
 
             // Control pacman

@@ -36,7 +36,13 @@ namespace MAH_Pacman.AI
             this.ChangedState(state);
         }
 
-        protected virtual void TargetReached() { }
+        protected virtual void TargetReached() 
+        {
+            if (entity.engine.GetSystem<AISystem>().IsFrighted())
+            {
+                SetState(State.FRIGHTENED);
+            }
+        }
 
         protected abstract void ChangedState(State state);
 
@@ -124,58 +130,71 @@ namespace MAH_Pacman.AI
                 // notify ghost that target is reached
                 if (path.Count() == 1) TargetReached();
 
-                if (path.Count() > 1)
+                if (path.Count() > 1) // Do a star algoitm
                 {
-                    if (GetDistance(path[0], path[1]) > 1)
-                    {
-                        if (path[1].X >= World.WIDTH - 1)
-                            path[1].X = (path[1].X) - World.WIDTH;
-
-                        if (path[1].Y >= World.HEIGHT - 1)
-                            path[1].Y = (path[1].Y) - World.HEIGHT;
-                    }
-
-                    movement.velocity.X = Math.Sign(path[1].X - transform.GetIntX()) * entity.GetComponent<AIComponent>().speed;
-                    movement.velocity.Y = Math.Sign(path[1].Y - transform.GetIntY()) * entity.GetComponent<AIComponent>().speed;
-
-                    transform.position.X = (int)(transform.position.X + .5f);
-                    transform.position.Y = (int)(transform.position.Y + .5f);
-
-                    movement.halt = false;
-
-                    lastTurn.X = (int)transform.position.X;
-                    lastTurn.Y = (int)transform.position.Y;
+                    TurnWithAStar(movement, transform, path);
                 }
                 else if (path.Count() == 0)
                 {
                     // Do nearest algorithm
                     if (fastest.X != -1000)
-                    {
-                        movement.velocity.X = Math.Sign(fastest.X - (int)transform.position.X) * entity.GetComponent<AIComponent>().speed;
-                        movement.velocity.Y = Math.Sign(fastest.Y - (int)transform.position.Y) * entity.GetComponent<AIComponent>().speed;
-
-                        transform.position.X = (int)(transform.position.X + .5f);
-                        transform.position.Y = (int)(transform.position.Y + .5f);
-
-                        movement.halt = false;
-
-                        lastTurn.X = (int)transform.position.X;
-                        lastTurn.Y = (int)transform.position.Y;
-
-                    }
+                        fastest = TurnToNearestNode(movement, transform, fastest);
                 }
             }
             else
             {
-                // Turn around
-                movement.velocity.X *= -1;
-                movement.velocity.Y *= -1;
-
-                movement.halt = false;
-
-                lastTurn.X = (int)transform.position.X;
-                lastTurn.Y = (int)transform.position.Y;
+                TurnAround(movement, transform);
             }
+        }
+
+        private void TurnWithAStar(MovementComponent movement, TransformationComponent transform, Point[] path)
+        {
+            if (GetDistance(path[0], path[1]) > 1)
+            {
+                if (path[1].X >= World.WIDTH - 1)
+                    path[1].X = (path[1].X) - World.WIDTH;
+
+                if (path[1].Y >= World.HEIGHT - 1)
+                    path[1].Y = (path[1].Y) - World.HEIGHT;
+            }
+
+            movement.velocity.X = Math.Sign(path[1].X - transform.GetIntX()) * entity.GetComponent<AIComponent>().speed;
+            movement.velocity.Y = Math.Sign(path[1].Y - transform.GetIntY()) * entity.GetComponent<AIComponent>().speed;
+
+            transform.position.X = (int)(transform.position.X + .5f);
+            transform.position.Y = (int)(transform.position.Y + .5f);
+
+            movement.halt = false;
+
+            lastTurn.X = (int)transform.position.X;
+            lastTurn.Y = (int)transform.position.Y;
+        }
+
+        private Point TurnToNearestNode(MovementComponent movement, TransformationComponent transform, Point fastest)
+        {
+            movement.velocity.X = Math.Sign(fastest.X - (int)transform.position.X) * entity.GetComponent<AIComponent>().speed;
+            movement.velocity.Y = Math.Sign(fastest.Y - (int)transform.position.Y) * entity.GetComponent<AIComponent>().speed;
+
+            transform.position.X = (int)(transform.position.X + .5f);
+            transform.position.Y = (int)(transform.position.Y + .5f);
+
+            movement.halt = false;
+
+            lastTurn.X = (int)transform.position.X;
+            lastTurn.Y = (int)transform.position.Y;
+            return fastest;
+        }
+
+        private void TurnAround(MovementComponent movement, TransformationComponent transform)
+        {
+            // Turn around
+            movement.velocity.X *= -1;
+            movement.velocity.Y *= -1;
+
+            movement.halt = false;
+
+            lastTurn.X = (int)transform.position.X;
+            lastTurn.Y = (int)transform.position.Y;
         }
 
         protected void TargetPacman()
@@ -209,27 +228,6 @@ namespace MAH_Pacman.AI
             return true;
         }
 
-        private float GetDistance(Point a, Point b)
-        {
-            Point delta = new Point(a.X - b.X, a.Y - b.Y);
-            return (float)Math.Sqrt((delta.X * delta.X) + (delta.Y * delta.Y));
-        }
-
-        protected GameEntity GetPacman()
-        {
-            return World.pacman;
-        }
-
-        protected GameEntity GetEntity()
-        {
-            return entity;
-        }
-
-        protected Point GetSpawn()
-        {
-            return spawn;
-        }
-
         public void SetState(State state)
         {
             stateTime = 0;
@@ -257,6 +255,27 @@ namespace MAH_Pacman.AI
             // new State
             this.state = state;
             ChangedState(state);
+        }
+
+        private float GetDistance(Point a, Point b)
+        {
+            Point delta = new Point(a.X - b.X, a.Y - b.Y);
+            return (float)Math.Sqrt((delta.X * delta.X) + (delta.Y * delta.Y));
+        }
+
+        protected GameEntity GetPacman()
+        {
+            return World.pacman;
+        }
+
+        protected GameEntity GetEntity()
+        {
+            return entity;
+        }
+
+        protected Point GetSpawn()
+        {
+            return spawn;
         }
 
         public State GetState()

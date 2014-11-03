@@ -41,20 +41,20 @@ namespace MAH_Pacman.Model
         private bool newState;
         private float stateTime;
  
-        public World(Engine engine, int level)
+        public World(Engine engine, int level, int score = 0)
         {
             this.engine = engine;
             this.level = level;
             this.InitWorld(level);
             this.lives = 3;
             this.stateTime = 0;
-            this.score = 0;
+            this.score = score;
             this.newState = false;
         }
 
         public void InitWorld(int level)
         {
-            this.state = GameState.BEGIN;
+            SetState(GameState.BEGIN);
             this.initEntities(level);
         }
 
@@ -221,7 +221,25 @@ namespace MAH_Pacman.Model
             transform.size = new Vector2(1, 1);
             movement.velocity = new Vector2(1, 0);
             sprite.origin = new Vector2(8, 8);
-            ai.controller = new AIBlinky(entity, (int)x, (int)y);
+
+            switch (ghost)
+            {
+                case LevelIO.MAP_TILES.MAP_GHOST_BLINKY:
+                    ai.controller = new AIBlinky(entity, (int)x, (int)y);
+                    break;
+                case LevelIO.MAP_TILES.MAP_GHOST_PINKY:
+                    ai.controller = new AIPinky(entity, (int)x, (int)y);
+                    break;
+                case LevelIO.MAP_TILES.MAP_GHOST_INKY:
+                    ai.controller = new AIInky(entity, (int)x, (int)y);
+                    break;
+                case LevelIO.MAP_TILES.MAP_GHOST_CLYDE:
+                    ai.controller = new AIClyde(entity, (int)x, (int)y);
+                    break;
+                default:
+                    break;
+            }
+            
             animation.Add("walk", new Animation(0, (int)(ghost - 3) * 16, 16, 8, .2f));
             animation.Add("dead", new Animation(64, 80, 16, 4, .2f));
             animation.Add("frightened", new Animation(0, 80, 16, 2, .2f));
@@ -240,12 +258,15 @@ namespace MAH_Pacman.Model
             var transform = new TransformationComponent();
             var sprite = new SpriteComponent(Assets.GetRegion("energizer"));
             var energizer = new EnergizerComponent();
+            var animation = new AnimationComponent();
+
+            animation.Add("idle", new Animation(64, 0, 16, 2, .2f));
 
             transform.position = new Vector2(x, y);
             transform.size = new Vector2(1, 1);
             sprite.origin = new Vector2(1, 1);
 
-            entity.Add(transform, sprite, energizer);
+            entity.Add(transform, sprite, energizer, animation);
             engine.Add(entity);
 
             return entity;
@@ -282,6 +303,8 @@ namespace MAH_Pacman.Model
                 case GameState.RUNNING:
                     break;
                 case GameState.BEGIN:
+                    if (Assets.SOUND)
+                        Assets.introSound.Play();
                     break;
                 case GameState.GAMEOVER:
                     HighscoreManager.SaveHighscore(GetScore());
@@ -289,6 +312,10 @@ namespace MAH_Pacman.Model
                     engine.Remove<MovementSystem>();
                     engine.Remove<CollisionSystem>();
                     engine.Remove<AnimationSystem>();
+
+                    if (Assets.SOUND)
+                        Assets.deathSound.Play();
+
                     break;
                 case GameState.WIN:
                     HighscoreManager.SaveHighscore(GetScore());
@@ -323,7 +350,7 @@ namespace MAH_Pacman.Model
             this.score += score;
         }
 
-        private void AddScore(int p, TransformationComponent transform)
+        private void AddScore(int score, TransformationComponent transform)
         {
             AddScore(score, transform.GetIntX(), transform.GetIntY());
         }
